@@ -21,4 +21,4 @@ format:
 	go fmt $(PACKAGES)
 
 deps:
-	go get -u $(DEPENDENCIES)
+	go get $(DEPENDENCIES)
