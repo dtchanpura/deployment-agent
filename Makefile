@@ -3,7 +3,8 @@ BINARY := cd-go
 PACKAGES := $(shell go list ./... | grep -v /vendor)
 
 DEPENDENCIES := \
-    gopkg.in/src-d/go-git.v4
+    gopkg.in/src-d/go-git.v4 \
+    github.com/gin-gonic/gin    
 
 
 all: build silent-test
