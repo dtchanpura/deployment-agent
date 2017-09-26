@@ -7,9 +7,11 @@ import (
 )
 
 func AddConfiguration(name string, repoPath string, postHook string) {
-	RepositoryConfiguration.Repositories = append(RepositoryConfiguration.Repositories, Repository{Name:name, Path:repoPath, PostHookPath:postHook})
-
-	file, err:= os.OpenFile(RepositoryConfiguration.ConfigFilePath, os.O_WRONLY, os.ModePerm)
+	repo := Repository{Name: name, Path: repoPath, PostHookPath: postHook, Token: GenerateRandomString(16, 4)}
+	RepositoryConfiguration.Repositories = append(RepositoryConfiguration.Repositories, repo)
+	log.Printf("Added a hook with name: %s. Token for auth is %s", repo.Name,
+		generateHash(repo.Name+repo.Token+RepositoryConfiguration.TokenSecret))
+	file, err := os.OpenFile(RepositoryConfiguration.ConfigFilePath, os.O_WRONLY, os.ModePerm)
 	if err != nil {
 		log.Fatalln(err)
 	}

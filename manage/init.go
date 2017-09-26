@@ -4,7 +4,6 @@ import (
 	"os"
 	"encoding/json"
 	"log"
-	//"fmt"
 	"fmt"
 )
 
@@ -21,7 +20,9 @@ func init() {
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		log.Println("Configuration file not found. Creating an empty one.")
 		file, err = os.Create(filePath)
-		file.WriteString("{\"repositories\":[]}")
+		fileString := fmt.Sprintf("{\"token_secret\":\"%s\",\"repositories\":[]}",
+			GenerateRandomString(16, 5))
+		file.WriteString(fileString)
 		file.Close()
 		log.Println("Configuration file created. Re-run the previous command.")
 		os.Exit(0)
@@ -48,6 +49,7 @@ func init() {
 
 type Configuration struct {
 	ConfigFilePath string       `json:"-"`
+	TokenSecret    string       `json:"token_secret"`
 	Repositories   []Repository `json:"repositories"`
 }
 
@@ -56,4 +58,5 @@ type Repository struct {
 	Path         string `json:"path"`
 	Token        string `json:"token"`
 	PostHookPath string `json:"post_hook_path"`
+	LastUpdated  string `json:"last_updated"`
 }
