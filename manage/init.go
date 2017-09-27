@@ -40,7 +40,7 @@ func init() {
 		log.Println("Error")
 		log.Fatalln(err)
 	}
-	fmt.Println(RepositoryConfiguration.Repositories)
+	//fmt.Println(RepositoryConfiguration.Repositories)
 	// Adding configuration path in Configuration type.
 	RepositoryConfiguration.ConfigFilePath = filePath
 	file.Close()
@@ -57,6 +57,7 @@ type Repository struct {
 	Name         string `json:"name"`
 	Path         string `json:"path"`
 	Token        string `json:"token"`
+	RemoteName   string `json:"remote_name"`
 	PostHookPath string `json:"post_hook_path"`
 	LastUpdated  string `json:"last_updated"`
 }
