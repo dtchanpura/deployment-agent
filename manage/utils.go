@@ -32,7 +32,6 @@ func PullRepository(repoPath string, remoteName string) error {
 func ExecuteHook(hookPath string) error {
 	cmd := exec.Command(hookPath)
 	err := cmd.Run()
-	log.Println()
 	return err
 }
 
