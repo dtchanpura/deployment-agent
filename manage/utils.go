@@ -6,6 +6,8 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
+	"os/exec"
+	"log"
 )
 
 func PullRepository(repoPath string, remoteName string) error {
@@ -26,6 +28,33 @@ func PullRepository(repoPath string, remoteName string) error {
 	}
 	return nil
 }
+
+func ExecuteHook(hookPath string) error {
+	cmd := exec.Command(hookPath)
+	err := cmd.Run()
+	log.Println()
+	return err
+}
+
+func GenerateRandomString(length int, strength int) string {
+	if strength > 5 {
+		strength = 5
+	}
+	if strength < 1 {
+		strength = 1
+	}
+	var tempString string
+	for i := 0; i < strength; i++ {
+		tempString += TokenConstants[i]
+	}
+	bs := make([]byte, length)
+	for i := range bs {
+		randomIndex, _ := rand.Int(rand.Reader, big.NewInt(int64(len(tempString))))
+		bs[i] = tempString[randomIndex.Int64()]
+	}
+	return string(bs)
+}
+
 
 func findRepository(repoName string) Repository {
 	for _, repo := range RepositoryConfiguration.Repositories {
@@ -49,23 +78,4 @@ func validateToken(repoName string, hashInput string) bool {
 		return hashedString == hashInput
 	}
 	return false
-}
-
-func GenerateRandomString(length int, strength int) string {
-	if strength > 5 {
-		strength = 5
-	}
-	if strength < 1 {
-		strength = 1
-	}
-	var tempString string
-	for i := 0; i < strength; i++ {
-		tempString += TokenConstants[i]
-	}
-	bs := make([]byte, length)
-	for i := range bs {
-		randomIndex, _ := rand.Int(rand.Reader, big.NewInt(int64(len(tempString))))
-		bs[i] = tempString[randomIndex.Int64()]
-	}
-	return string(bs)
 }
