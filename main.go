@@ -1,9 +1,9 @@
 package main
 
 import (
-	. "github.com/dtchanpura/cd-go/manage"
 	"flag"
 	"fmt"
+	. "github.com/dtchanpura/cd-go/manage"
 	"log"
 )
 

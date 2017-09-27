@@ -1,11 +1,11 @@
 package manage
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
 	"fmt"
-	"log"
+	"github.com/gin-gonic/gin"
 	"gopkg.in/src-d/go-git.v4"
+	"log"
+	"net/http"
 )
 
 func StartServer(host string, port int) {
@@ -29,10 +29,7 @@ func StartServer(host string, port int) {
 				}
 			}
 			if !isUpToDate {
-				err = ExecuteHook(repo.PostHookPath)
-				if err != nil {
-					log.Printf("Error in Executing Hook: %v\n", err)
-				}
+				go ExecuteHook(repo.PostHookPath)
 			} else {
 				c.Writer.Write([]byte("Repository already up-to-date"))
 			}

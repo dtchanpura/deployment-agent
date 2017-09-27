@@ -1,13 +1,13 @@
 package manage
 
 import (
-	"gopkg.in/src-d/go-git.v4"
-	"math/big"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
-	"os/exec"
+	"gopkg.in/src-d/go-git.v4"
 	"log"
+	"math/big"
+	"os/exec"
 )
 
 func PullRepository(repoPath string, remoteName string) error {
@@ -29,10 +29,12 @@ func PullRepository(repoPath string, remoteName string) error {
 	return nil
 }
 
-func ExecuteHook(hookPath string) error {
+func ExecuteHook(hookPath string) {
 	cmd := exec.Command(hookPath)
 	err := cmd.Run()
-	return err
+	if err != nil {
+		log.Println(err)
+	}
 }
 
 func GenerateRandomString(length int, strength int) string {
@@ -53,7 +55,6 @@ func GenerateRandomString(length int, strength int) string {
 	}
 	return string(bs)
 }
-
 
 func findRepository(repoName string) Repository {
 	for _, repo := range RepositoryConfiguration.Repositories {

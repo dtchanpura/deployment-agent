@@ -1,9 +1,9 @@
 package manage
 
 import (
-	"os"
-	"log"
 	"encoding/json"
+	"log"
+	"os"
 )
 
 func AddConfiguration(name string, repoPath string, postHook string) {
