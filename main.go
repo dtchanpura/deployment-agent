@@ -14,7 +14,7 @@ func main() {
 	servePtr := flag.Bool("serve", false, "Use this to serve and start listener")
 	repoPtr := flag.String("repopath", "", "Path to Repository")
 	namePtr := flag.String("name", "", "Name of configuration")
-	serverHostPtr := flag.String("port", "0.0.0.0", "Host to bind to")
+	serverHostPtr := flag.String("host", "0.0.0.0", "Host to bind to")
 	serverPortPtr := flag.Int("port", 8080, "Port to listen on")
 
 	flag.Parse()
@@ -24,10 +24,9 @@ func main() {
 		}
 		AddConfiguration(*namePtr, *repoPtr, "")
 	} else if *servePtr {
-		fmt.Println("Serving...")
 		StartServer(*serverHostPtr, *serverPortPtr)
 	} else {
-		fmt.Println("Atleast add or serve flag is required.")
+		fmt.Println("Atleast -add or -serve flag is required.")
 	}
 
 }
