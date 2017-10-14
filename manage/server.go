@@ -2,21 +2,24 @@ package manage
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"gopkg.in/src-d/go-git.v4"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"gopkg.in/src-d/go-git.v4"
 )
 
+// StartServer for starting the gin server on given host:port
 func StartServer(host string, port int) {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
 	router.GET("/repository/:reponame/:token", func(c *gin.Context) {
 		repoName := c.Param("reponame")
 		token := c.Param("token")
+		clientIP := c.ClientIP()
 		c.Status(http.StatusOK)
 		//fmt.Println(reponame, token)
-		result := validateToken(repoName, token)
+		result := validateToken(repoName, token, clientIP)
 		if result {
 			var isUpToDate bool
 			c.Writer.Write([]byte("Token Valid\n"))

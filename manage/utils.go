@@ -4,12 +4,14 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
-	"gopkg.in/src-d/go-git.v4"
 	"log"
 	"math/big"
 	"os/exec"
+
+	"gopkg.in/src-d/go-git.v4"
 )
 
+// PullRepository for pulling a repository with repoPath and remoteName
 func PullRepository(repoPath string, remoteName string) error {
 	if remoteName == "" {
 		remoteName = "origin"
@@ -29,6 +31,9 @@ func PullRepository(repoPath string, remoteName string) error {
 	return nil
 }
 
+// ExecuteHook for executing hook for given hookPath
+// It should be a executable file with shebang (`#!`) in first line.
+// For Example: `#!/bin/bash`
 func ExecuteHook(hookPath string) {
 	cmd := exec.Command(hookPath)
 	err := cmd.Run()
@@ -37,6 +42,8 @@ func ExecuteHook(hookPath string) {
 	}
 }
 
+// GenerateRandomString for generating a random string of specified length and
+// strength between 1 to 5.
 func GenerateRandomString(length int, strength int) string {
 	if strength > 5 {
 		strength = 5
@@ -71,11 +78,19 @@ func generateHash(input string) string {
 	return base64.URLEncoding.EncodeToString(h.Sum(nil))
 }
 
-func validateToken(repoName string, hashInput string) bool {
+func validateToken(repoName string, hashInput string, clientIP string) bool {
 	// check hash(TokenSecret + name + token) == token
 	if repo := findRepository(repoName); repo.Name == repoName {
 		hashedString := generateHash(repo.Name + repo.Token + RepositoryConfiguration.TokenSecret)
-		return hashedString == hashInput
+		isValidIP := false
+		if len(repo.WhiteListedIPs) > 0 {
+			for _, ip := range repo.WhiteListedIPs {
+				isValidIP = ip == clientIP
+			}
+		} else {
+			isValidIP = true
+		}
+		return (hashedString == hashInput) && isValidIP
 	}
 	return false
 }
