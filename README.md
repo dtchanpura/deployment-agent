@@ -27,6 +27,6 @@ variable if environment variable is unavailable it looks for
 - [x] Generate and Validate Token
 - [ ] Hostname to be used.
 - [x] Pull Repository on Webhook Call.
-- [ ] Add Whitelisting of IPs for Webhook Call.
+- [x] Add Whitelisting of IPs for Webhook Call.
 - [x] Run Hook Commands/Script on Webhook Call.
 - [ ] Add test cases
