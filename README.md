@@ -1,5 +1,11 @@
 # cd-go
 
+## Configuration
+
+All configurations are stored in a file located at $CDGO_CONFIG environment
+variable if environment variable is unavailable it looks for
+`$HOME/.config/cd-go/config.json`
+
 ## Commands
 
 ### `add` Command
