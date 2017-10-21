@@ -58,21 +58,3 @@ func init() {
 	file.Close()
 
 }
-
-// Configuration json structure for JSON File.
-type Configuration struct {
-	ConfigFilePath string       `json:"-"`
-	TokenSecret    string       `json:"token_secret"`
-	Repositories   []Repository `json:"repositories"`
-}
-
-// Repository json structure to be stored in Configuration file.
-type Repository struct {
-	Name           string   `json:"name"`
-	Path           string   `json:"path"`
-	Token          string   `json:"token"`
-	RemoteName     string   `json:"remote_name"`
-	PostHookPath   string   `json:"post_hook_path"`
-	LastUpdated    string   `json:"last_updated"`
-	WhiteListedIPs []string `json:"whitelisted_ips"`
-}
