@@ -1,20 +1,93 @@
 package manage
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 	"testing"
+
+	git "gopkg.in/src-d/go-git.v4"
 )
 
-func TestAddConfiguration(t *testing.T) {
-	wd, err := os.Getwd()
-	if err != nil {
-		t.Error(err)
+// Function for Initializing test configuration path
+func testInit(t *testing.T, removeConfig bool) string {
+	// wd, err := os.Getwd()
+	// if err != nil {
+	// t.Fatal(err)
+	// }
+	testConfigurationPath := os.Getenv("HOME") + "/.config/cd-go/test/config.json"
+	// testConfigurationPath := fmt.Sprintf("/test/config.json", wd)
+	if removeConfig {
+		err := os.RemoveAll(testConfigurationPath)
+		if err != nil {
+			t.Fatal(err)
+		}
 	}
-	testPath := fmt.Sprintf("%s/test", wd)
-	os.Setenv("CDGO_CONFIG", testPath)
-	// init()
 
+	// os.Setenv("CDGO_CONFIG", testConfigurationPath)
+
+	// First Initializing Configuration file with Test Path
+	initializeConfigFile(testConfigurationPath)
+	return testConfigurationPath
+}
+
+// Getting the Configuration struct from the test file.
+func getConfigurationFromPath(t *testing.T, testConfigurationPath string) Configuration {
+	file, err := os.Open(testConfigurationPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	decoder := json.NewDecoder(file)
+	testConfiguration := Configuration{}
+	err = decoder.Decode(&testConfiguration)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return testConfiguration
+}
+
+func assertEqual(t *testing.T, a interface{}, b interface{}, message string) {
+	if a == b {
+		return
+	}
+	if len(message) == 0 {
+		message = fmt.Sprintf("%v != %v", a, b)
+	}
+	t.Fatal(message)
+}
+
+func TestInitializeConfigFile(t *testing.T) {
+	// First Initializing Configuration file with Test Path
+	testInit(t, true)
+	// Again Initializing for checking existing path
+
+	testConfigurationPath := testInit(t, false)
+	assertEqual(t, len(getConfigurationFromPath(t, testConfigurationPath).Repositories), 0, "")
+}
+
+func TestAddConfiguration(t *testing.T) {
+	mockName := "test-repo"
+	mockPath := "repo/path"
+	mockPostHook := "repo/hook"
+	mockwlip := "127.0.0.1"
+	testConfigurationPath := testInit(t, false)
+	AddConfiguration(mockName, mockPath, mockPostHook, []string{mockwlip})
+	testConfiguration := getConfigurationFromPath(t, testConfigurationPath)
+	assertEqual(t, len(testConfiguration.Repositories), 1, "")
+	assertEqual(t, testConfiguration.Repositories[0].Name, mockName, "")
+	assertEqual(t, testConfiguration.Repositories[0].Path, mockPath, "")
+	assertEqual(t, testConfiguration.Repositories[0].PostHookPath, mockPostHook, "")
+	assertEqual(t, len(testConfiguration.Repositories[0].WhiteListedIPs), 1, "")
+	assertEqual(t, testConfiguration.Repositories[0].WhiteListedIPs[0], mockwlip, "")
+}
+
+func TestAddRepository(t *testing.T) {
+	testConfigurationPath := testInit(t, false)
+	folderPathStrings := strings.Split(testConfigurationPath, string(os.PathSeparator))
+	folderPath := strings.Join(folderPathStrings[:len(folderPathStrings)-1], string(os.PathSeparator))
+
+	git.PlainInit(folderPath+"/repo", false)
 }
 
 func TestPullRepository(t *testing.T) {

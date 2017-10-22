@@ -4,7 +4,7 @@ import "time"
 
 // Configuration json structure for JSON File.
 type Configuration struct {
-	ConfigFilePath string       `json:"-"`
+	ConfigFilePath string       `json:"config_file_path"`
 	TokenSecret    string       `json:"token_secret"`
 	Repositories   []Repository `json:"repositories"`
 }

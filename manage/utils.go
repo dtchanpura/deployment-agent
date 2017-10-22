@@ -10,7 +10,7 @@ import (
 	"math/big"
 	"os"
 	"os/exec"
-	"testing"
+	"strings"
 
 	"gopkg.in/src-d/go-git.v4"
 )
@@ -88,6 +88,48 @@ func GenerateRandomString(length int, strength int) string {
 	return string(bs)
 }
 
+func initializeConfigFile(filePath string) {
+	var file *os.File
+
+	// Configuration file stored at any of following paths
+	// * Path in environment variable CDGO_CONFIG
+	// * Path in $HOME/.config/cd-go/config.json
+
+	folderPathStrings := strings.Split(filePath, string(os.PathSeparator))
+	folderPath := strings.Join(folderPathStrings[:len(folderPathStrings)-1], string(os.PathSeparator))
+
+	if _, err := os.Stat(filePath); os.IsNotExist(err) {
+		log.Println("Configuration file not found. Creating an empty one.")
+		_ = os.MkdirAll(folderPath, 0755)
+		file, err = os.Create(filePath)
+		if err != nil {
+			log.Println("Error while creating a file.")
+			log.Fatal(err)
+		}
+		fileString := fmt.Sprintf(`{"config_file_path":"%s","token_secret":"%s","repositories":[]}`, filePath, GenerateRandomString(16, 5))
+		file.WriteString(fileString)
+		file.Close()
+		log.Println("Configuration file created. Re-run the previous command.")
+	} else {
+		file, err = os.Open(filePath)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		decoder := json.NewDecoder(file)
+		RepositoryConfiguration = Configuration{}
+		err := decoder.Decode(&RepositoryConfiguration)
+		if err != nil {
+			log.Println("Error")
+			log.Fatalln(err)
+		}
+		//fmt.Println(RepositoryConfiguration.Repositories)
+		// Adding configuration path in Configuration type.
+		// RepositoryConfiguration.ConfigFilePath = filePath
+		file.Close()
+	}
+}
+
 func findRepository(repoName string) Repository {
 	for _, repo := range RepositoryConfiguration.Repositories {
 		if repo.Name == repoName {
@@ -118,14 +160,4 @@ func validateToken(repoName string, hashInput string, clientIP string) bool {
 		return (hashedString == hashInput) && isValidIP
 	}
 	return false
-}
-
-func assertEqual(t *testing.T, a interface{}, b interface{}, message string) {
-	if a == b {
-		return
-	}
-	if len(message) == 0 {
-		message = fmt.Sprintf("%v != %v", a, b)
-	}
-	t.Fatal(message)
 }
