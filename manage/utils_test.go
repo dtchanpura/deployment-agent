@@ -68,28 +68,43 @@ func TestInitializeConfigFile(t *testing.T) {
 
 func TestAddConfiguration(t *testing.T) {
 	mockName := "test-repo"
-	mockPath := "repo/path"
 	mockPostHook := "repo/hook"
 	mockwlip := "127.0.0.1"
 	testConfigurationPath := testInit(t, false)
-	AddConfiguration(mockName, mockPath, mockPostHook, []string{mockwlip})
+	repoPath := createTestRepository(testConfigurationPath)
+	AddConfiguration(mockName, repoPath, mockPostHook, []string{mockwlip})
 	testConfiguration := getConfigurationFromPath(t, testConfigurationPath)
 	assertEqual(t, len(testConfiguration.Repositories), 1, "")
 	assertEqual(t, testConfiguration.Repositories[0].Name, mockName, "")
-	assertEqual(t, testConfiguration.Repositories[0].Path, mockPath, "")
+	assertEqual(t, testConfiguration.Repositories[0].Path, repoPath, "")
 	assertEqual(t, testConfiguration.Repositories[0].PostHookPath, mockPostHook, "")
 	assertEqual(t, len(testConfiguration.Repositories[0].WhiteListedIPs), 1, "")
 	assertEqual(t, testConfiguration.Repositories[0].WhiteListedIPs[0], mockwlip, "")
 }
 
-func TestAddRepository(t *testing.T) {
-	testConfigurationPath := testInit(t, false)
-	folderPathStrings := strings.Split(testConfigurationPath, string(os.PathSeparator))
-	folderPath := strings.Join(folderPathStrings[:len(folderPathStrings)-1], string(os.PathSeparator))
-
-	git.PlainInit(folderPath+"/repo", false)
-}
-
 func TestPullRepository(t *testing.T) {
 
+	testConfigurationPath := testInit(t, false)
+	// fmt.Println(testConfigurationPath)
+	repoPath := createTestRepository(testConfigurationPath)
+	err := PullRepository(repoPath, "")
+	if err != nil {
+		t.Log(err)
+	}
+}
+
+func createTestRepository(testConfigurationPath string) string {
+	repoName := "test-repo"
+	folderPathStrings := strings.Split(testConfigurationPath, string(os.PathSeparator))
+	folderPath := strings.Join(folderPathStrings[:len(folderPathStrings)-1], string(os.PathSeparator))
+	repoPath := strings.Join([]string{folderPath, repoName}, string(os.PathSeparator))
+	bareRepoPath := repoPath + ".git"
+	// Initializing bare repo.
+	git.PlainInit(bareRepoPath, true)
+	// Initializing non-bare repo for pulling and cloning
+
+	git.PlainClone(repoPath, false, &git.CloneOptions{URL: bareRepoPath})
+	f, _ := os.Create(repoPath + string(os.PathSeparator) + "first")
+	f.Close()
+	return repoPath
 }
