@@ -1,0 +1,13 @@
+[Unit]
+Description=cd-go Webhook Listener
+After=network.target
+
+[Service]
+Type=simple
+User=darshil
+# WorkingDirectory=/home/darshil
+ExecStart=/usr/local/bin/cd-go -serve -port 8081
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
