@@ -24,7 +24,7 @@ type Repository struct {
 type Response struct {
 	StatusCode int    `json:"status_code"`
 	Ok         bool   `json:"ok"`
-	Message    string `json:"message"`
+	Message    string `json:"message,omitempty"`
 }
 
 // TravisWebhookBody describes the payload of webhook

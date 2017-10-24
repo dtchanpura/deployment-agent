@@ -5,7 +5,6 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
-	"fmt"
 	"log"
 	"math/big"
 	"os"
@@ -60,10 +59,12 @@ func AddConfiguration(name string, repoPath string, postHook string, whitelisted
 // It should be a executable file with shebang (`#!`) in first line.
 // For Example: `#!/bin/bash`
 func ExecuteHook(hookPath string) {
-	cmd := exec.Command(hookPath)
-	err := cmd.Run()
-	if err != nil {
-		log.Println(err)
+	if hookPath != "" {
+		cmd := exec.Command(hookPath)
+		err := cmd.Run()
+		if err != nil {
+			log.Println(err)
+		}
 	}
 }
 
@@ -106,8 +107,12 @@ func initializeConfigFile(filePath string) {
 			log.Println("Error while creating a file.")
 			log.Fatal(err)
 		}
-		fileString := fmt.Sprintf(`{"config_file_path":"%s","token_secret":"%s","repositories":[]}`, filePath, GenerateRandomString(16, 5))
-		file.WriteString(fileString)
+		fileString, jsonErr := json.Marshal(Configuration{ConfigFilePath: filePath, TokenSecret: GenerateRandomString(16, 5), Repositories: []Repository{}})
+		if jsonErr != nil {
+			log.Println("Error encoding JSON.")
+			log.Fatal(jsonErr)
+		}
+		file.WriteString(string(fileString))
 		file.Close()
 		log.Println("Configuration file created. Re-run the previous command.")
 	} else {
