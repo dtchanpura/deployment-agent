@@ -13,4 +13,7 @@ pipeline {
       }
     }
   }
+  environment {
+    GOPATH = '/var/lib/jenkins/go'
+  }
 }
