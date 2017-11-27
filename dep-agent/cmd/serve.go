@@ -1,4 +1,4 @@
-// Copyright © 2017 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2017 Darshil Chanpura <dtchanpura@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -53,15 +53,7 @@ func init() {
 
 	defaultHost = ""
 	defaultPort = 8000
-	// Here you will define your flags and configuration settings.
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// serveCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// serveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	serveCmd.Flags().StringVarP(&host, "host", "H", defaultHost, "Host where to listen")
 	serveCmd.Flags().IntVarP(&port, "port", "p", defaultPort, "Port where to listen")
 }

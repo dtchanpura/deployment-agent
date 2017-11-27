@@ -1,4 +1,4 @@
-// Copyright © 2017 NAME HERE <EMAIL ADDRESS>
+// Copyright © 2017 Darshil Chanpura <dtchanpura@gmail.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
@@ -80,6 +81,7 @@ func initConfig() {
 		viper.SetConfigName(".dep-agent")
 		viper.SetDefault("serve.host", "")
 		viper.SetDefault("serve.port", 8000)
+		cfgFile = path.Join(home, ".dep-agent.yaml")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
