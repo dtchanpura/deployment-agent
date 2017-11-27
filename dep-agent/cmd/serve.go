@@ -15,8 +15,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"cgit.dcpri.me/deployment-agent/listener"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -44,7 +43,8 @@ var serveCmd = &cobra.Command{
 			port = viper.GetInt("serve.port")
 		}
 
-		fmt.Println("serve called")
+		// fmt.Println("serve called")
+		listener.StartListener(host, port)
 	},
 }
 
