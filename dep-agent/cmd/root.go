@@ -19,6 +19,7 @@ import (
 	"os"
 	"path"
 
+	"cgit.dcpri.me/deployment-agent/config"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -89,5 +90,9 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
+		viper.UnmarshalKey("serve", &config.StoredServe)
+		viper.UnmarshalKey("projects", &config.StoredProjects)
+		// viper.Unmarshal(&config.StoredConfiguration)
+		// config.ViperConfiguration = viper.Sub("projects")
 	}
 }

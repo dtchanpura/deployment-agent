@@ -9,6 +9,7 @@ import (
 	"net"
 	"os"
 
+	"cgit.dcpri.me/deployment-agent/errorconstants"
 	"github.com/google/uuid"
 	"gopkg.in/yaml.v2"
 )
@@ -25,9 +26,26 @@ func UpdateConfiguration(cfgFile string, configuration Configuration, overwrite 
 			return err
 		}
 	} else {
-		return errors.New(ErrorFileExists)
+		return errors.New(errorconstants.ErrorFileExists)
 	}
 	return nil
+}
+
+// UpdateProject for adding or modifying the project
+func UpdateProject(cfgFile string, project Project) {
+	_, err := FindProject(project.UUID)
+	if err.Error() == errorconstants.ErrorNoProjectFound {
+		StoredProjects = append(StoredProjects, project)
+		updateProjects(cfgFile, StoredProjects)
+	}
+}
+
+func updateProjects(cfgFile string, projects []Project) {
+	configuration := Configuration{
+		ServeConfig:    StoredServe,
+		ProjectConfigs: projects,
+	}
+	UpdateConfiguration(cfgFile, configuration, true)
 }
 
 func generateHash(input string) string {
@@ -62,4 +80,14 @@ func (tokenDetail *TokenDetail) containsIP(clientIP string) bool {
 	}
 	ipAddress := net.ParseIP(clientIP)
 	return ipNet.Contains(ipAddress)
+}
+
+// FindProject for finding the Project from StoredProjects
+func FindProject(projectUUID string) (Project, error) {
+	for _, project := range StoredProjects {
+		if project.UUID == projectUUID {
+			return project, nil
+		}
+	}
+	return *NewProject(), errors.New(errorconstants.ErrorNoProjectFound)
 }

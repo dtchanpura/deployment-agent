@@ -1,8 +1,10 @@
 package listener
 
 import (
+	"fmt"
 	"net/http"
 
+	"cgit.dcpri.me/deployment-agent/common"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,7 +26,10 @@ func generateResponse(uuid, token, clientIP string) Response {
 	if result {
 		var isUpToDate bool
 		// c.Writer.Write([]byte("Token Valid\n"))
-		repo := findProject(uuid)
+		repo, err := common.FindProject(uuid)
+		if err != nil {
+			fmt.Println(err) // this will never occur as
+		}
 		if !isUpToDate {
 			go executeHooks(repo)
 			response.Ok = true
