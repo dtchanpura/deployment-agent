@@ -16,22 +16,52 @@ package cmd
 
 import (
 	"fmt"
+	"os"
 
+	"cgit.dcpri.me/deployment-agent/config"
+	"cgit.dcpri.me/deployment-agent/constants"
+	"cgit.dcpri.me/deployment-agent/manage"
+	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
+)
+
+var (
+	name      string
+	preHook   string
+	postHook  string
+	errorHook string
+	workDir   string
+	cidr      []string
 )
 
 // addCmd represents the add command
 var addCmd = &cobra.Command{
 	Use:   "add",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "For adding a new project",
+	Long:  `Projects can be added with this command including the hooks, its IPs etc.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("add called")
+		cmd.ParseFlags(args)
+		project := config.NewProject()
+		project.Name = name
+		project.PreHook = preHook
+		project.PostHook = postHook
+		project.ErrorHook = errorHook
+		project.WorkDir = workDir
+		// project.Tokens = []Token{}
+		for _, ipCIDR := range cidr {
+			project.Tokens = append(project.Tokens, config.NewToken(ipCIDR))
+		}
+		// bts, _ := yaml.Marshal(project)
+		if err := project.ValidateProjectConfiguration(); err.Error() == constants.ErrorInvalidConfiguration {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		err := manage.AddProject(cfgFile, project)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		// fmt.Println(string(bts[:]))
 	},
 }
 
@@ -46,5 +76,17 @@ func init() {
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
+	// Find home directory.
+	home, err := homedir.Dir()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+	addCmd.Flags().StringVar(&name, "name", "", "Name of project.")
+	addCmd.Flags().StringVar(&preHook, "pre-hook", "", "Path to script to be executed before the event.")
+	addCmd.Flags().StringVar(&postHook, "post-hook", "", "Path to script to be executed after the event.")
+	addCmd.Flags().StringVar(&errorHook, "error-hook", "", "Path to script to be executed in case of error.")
+	addCmd.Flags().StringVar(&workDir, "work-dir", home, "Work directory.")
+	addCmd.Flags().StringArrayVar(&cidr, "ip-cidr", []string{"0.0.0.0/0"}, "Whitelist network CIDR which can access the webhook.")
 	// addCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
