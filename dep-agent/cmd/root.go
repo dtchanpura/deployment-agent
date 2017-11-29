@@ -111,7 +111,8 @@ func initConfig() {
 		viper.OnConfigChange(func(e fsnotify.Event) {
 			fmt.Println("Config file changed:", e.Name)
 			viper.UnmarshalKey("serve", &config.StoredServe)
-			viper.UnmarshalKey("projects", &config.StoredProjects)
+			// viper.UnmarshalKey("projects", &config.StoredProjects)
+			config.DecodeProjectConfiguration(viper.AllSettings())
 		})
 
 	}
