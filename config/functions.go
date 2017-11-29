@@ -22,7 +22,7 @@ func UpdateConfiguration(cfgFile string, configuration Configuration, overwrite 
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(configBytes[:]))
+	// fmt.Println(string(configBytes[:]))
 	if _, err := os.Stat(cfgFile); os.IsNotExist(err) || overwrite {
 		err = ioutil.WriteFile(cfgFile, configBytes, 0644)
 		if err != nil {
@@ -38,8 +38,6 @@ func UpdateConfiguration(cfgFile string, configuration Configuration, overwrite 
 func UpdateProject(cfgFile string, project Project) error {
 	_, err := FindProject(project.Name, project.UUID)
 	if err != nil && err.Error() == constants.ErrorNoProjectFound {
-		// TODO Test and remove this following line
-		// StoredProjects = append(StoredProjects, project)
 		updateProjects(cfgFile, project)
 		// fmt.Println(err)
 		return nil
@@ -48,13 +46,12 @@ func UpdateProject(cfgFile string, project Project) error {
 }
 
 func updateProjects(cfgFile string, projects ...Project) {
-	currentProjects := StoredProjects
 	for _, project := range projects {
-		currentProjects = append(currentProjects, project)
+		StoredProjects = append(StoredProjects, project)
 	}
 	configuration := Configuration{
 		ServeConfig:    StoredServe,
-		ProjectConfigs: currentProjects,
+		ProjectConfigs: StoredProjects,
 	}
 	UpdateConfiguration(cfgFile, configuration, true)
 }
@@ -99,14 +96,19 @@ func (project *Project) ValidateProjectConfiguration() error {
 // ValidateToken is a Project function to check if the token is valid.
 func (project *Project) ValidateToken(clientIP string, tokenHash string) bool {
 	// Iterate through tokens to find if the token exists or hash matches
+	ok := false
 	for _, token := range project.Tokens {
 		// token.WhitelistedNetwork
+		// fmt.Println(tokenHash)
+		// fmt.Println(generateHash(project.Name + project.Secret + token.Token))
 		if token.containsIP(clientIP) {
-			return tokenHash == generateHash(project.Name+project.Secret+token.Token)
+			if tokenHash == generateHash(project.Name+project.Secret+token.Token) {
+				return true
+			}
 		}
 		// fmt.Println(token)
 	}
-	return false
+	return ok
 }
 
 // GetHash for getting hash for given token with index
@@ -164,13 +166,13 @@ func FindProject(name, projectUUID string) (Project, error) {
 	return Project{}, errors.New(constants.ErrorNoProjectFound)
 }
 
+// DecodeProjectConfiguration for decoding the project configuration from viper.AllSettings()
 func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 	// config.StoredProjects
 	// projects := viper.AllSettings()["projects"].([]interface{})
 
 	projects := []Project{}
 	if prjs, ok := settingsMap["projects"]; ok {
-
 		for _, prj := range prjs.([]interface{}) {
 			p := prj.(map[string]interface{})
 			projectStruct := Project{
@@ -197,13 +199,15 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 				}
 			}
 
-			tokens := p["tokens"].([]interface{})
-			for _, token := range tokens {
-				tokenStruct := TokenDetail{
-					WhitelistedNetwork: token.(map[string]interface{})["whitelistnet"].(string),
-					Token:              token.(map[string]interface{})["token"].(string),
+			if tokens, hasTokens := p["tokens"]; hasTokens {
+				// tokens := p["tokens"].([]interface{})
+				for _, token := range tokens.([]interface{}) {
+					tokenStruct := TokenDetail{
+						WhitelistedNetwork: token.(map[string]interface{})["whitelistnet"].(string),
+						Token:              token.(map[string]interface{})["token"].(string),
+					}
+					projectStruct.Tokens = append(projectStruct.Tokens, tokenStruct)
 				}
-				projectStruct.Tokens = append(projectStruct.Tokens, tokenStruct)
 			}
 			projects = append(projects, projectStruct)
 		}

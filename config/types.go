@@ -14,15 +14,18 @@ type Serve struct {
 
 // Project for all projects configurations
 type Project struct {
-	Name       string        `yaml:"name" json:"name"`
-	UUID       string        `yaml:"uuid" json:"uuid"`
-	WorkDir    string        `yaml:"work_dir" json:"work_dir"`
-	RemotePath string        `yaml:"remote_path" json:"remote_path"` // For downloading
-	PostHook   string        `yaml:"post_hook,omitempty" json:"post_hook,omitempty"`
-	PreHook    string        `yaml:"pre_hook,omitempty" json:"pre_hook,omitempty"`
-	ErrorHook  string        `yaml:"error_hook,omitempty" json:"error_hook,omitempty"`
-	Secret     string        `yaml:"secret" json:"secret"`
-	Tokens     []TokenDetail `yaml:"tokens" json:"tokens"`
+	Name          string        `yaml:"name" json:"name"`
+	UUID          string        `yaml:"uuid" json:"uuid"`
+	WorkDir       string        `yaml:"work_dir" json:"work_dir"`
+	RemotePath    string        `yaml:"remote_path" json:"remote_path"` // For downloading
+	PostHook      string        `yaml:"post_hook,omitempty" json:"post_hook,omitempty"`
+	PostHookArgs  []string      `yaml:"post_hook_args,omitempty" json:"post_hook_args,omitempty"`
+	PreHook       string        `yaml:"pre_hook,omitempty" json:"pre_hook,omitempty"`
+	PreHookArgs   []string      `yaml:"pre_hook_args,omitempty" json:"pre_hook_args,omitempty"`
+	ErrorHook     string        `yaml:"error_hook,omitempty" json:"error_hook,omitempty"`
+	ErrorHookArgs []string      `yaml:"error_hook_args,omitempty" json:"error_hook_args,omitempty"`
+	Secret        string        `yaml:"secret" json:"secret"`
+	Tokens        []TokenDetail `yaml:"tokens" json:"tokens"`
 }
 
 // TokenDetail is for allowing multiple ips to access same

@@ -1,9 +1,13 @@
 package listener
 
 import (
+	"errors"
 	"fmt"
+	"os"
+	"os/exec"
 
 	"cgit.dcpri.me/deployment-agent/config"
+	"cgit.dcpri.me/deployment-agent/constants"
 )
 
 func validateToken(projectUUID, token, clientIP string) bool {
@@ -16,5 +20,48 @@ func validateToken(projectUUID, token, clientIP string) bool {
 }
 
 func executeHooks(project config.Project) {
-	fmt.Println("hello.")
+	// Execute PreHook (if any)
+	var isSuccess bool
+	isSuccess = true
+	if project.PreHook != "" {
+		err := executeScript(project.WorkDir, project.PreHook)
+		if err != nil {
+			fmt.Printf("error occurred: ")
+			fmt.Println(err)
+			isSuccess = false
+		}
+	}
+	if project.PostHook != "" {
+		err := executeScript(project.WorkDir, project.PostHook)
+		if err != nil {
+			fmt.Println(err)
+			isSuccess = false
+		}
+	}
+	if project.ErrorHook != "" && !isSuccess {
+		fmt.Println("Error occurred in running prehook and/or posthook")
+		err := executeScript(project.WorkDir, project.ErrorHook)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+}
+
+func executeScript(workDir, filePath string, args ...string) error {
+	if fileInfo, err := os.Stat(filePath); !os.IsPermission(err) && !os.IsNotExist(err) && fileInfo.Mode()&0111 != 0 {
+		cmd := exec.Command(filePath)
+		if dirInfo, err := os.Stat(workDir); err == nil && dirInfo.IsDir() {
+			cmd.Dir = workDir
+		} else {
+			fmt.Println(err)
+		}
+		// err := cmd.Run()
+		bts, err := cmd.Output()
+		if err != nil {
+			return err
+		}
+		fmt.Printf("Command Output: %s", string(bts[:]))
+		return nil
+	}
+	return errors.New(constants.ErrorFileNotExecutable)
 }
