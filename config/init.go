@@ -13,20 +13,18 @@ var StoredProjects []Project
 // StoredServe Contains the latest stored serve details
 var StoredServe Serve
 
-var StoredConfiguration Configuration
+// var StoredConfiguration Configuration
 
 // InitializeConfiguration for initializing the configuration file.
 func InitializeConfiguration(cfgFile string, overwrite bool) {
-	defaultConfig := &Configuration{
+	defaultConfig := Configuration{
 		ServeConfig: Serve{
 			Host: "",
 			Port: 8000,
 		},
 	}
-	fmt.Println(StoredServe)
-	fmt.Println(StoredProjects)
 
-	err := UpdateConfiguration(cfgFile, *defaultConfig, overwrite)
+	err := UpdateConfiguration(cfgFile, defaultConfig, overwrite)
 	if err != nil {
 		if err.Error() == constants.ErrorFileExists {
 			fmt.Println("Configuration already initialized. Use -f for overwriting it forcefully.")

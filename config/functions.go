@@ -39,19 +39,24 @@ func UpdateProject(cfgFile string, project Project) error {
 	_, err := FindProject(project.Name, project.UUID)
 	if err != nil && err.Error() == constants.ErrorNoProjectFound {
 		// TODO Test and remove this following line
-		StoredProjects = append(StoredProjects, project)
-		updateProjects(cfgFile, StoredProjects)
+		// StoredProjects = append(StoredProjects, project)
+		updateProjects(cfgFile, project)
+		// fmt.Println(err)
 		return nil
 	}
 	return errors.New(constants.ErrorProjectAlreadyExists)
 }
 
-func updateProjects(cfgFile string, projects []Project) {
-	configuration := &Configuration{
-		ServeConfig:    StoredServe,
-		ProjectConfigs: projects,
+func updateProjects(cfgFile string, projects ...Project) {
+	currentProjects := StoredProjects
+	for _, project := range projects {
+		currentProjects = append(currentProjects, project)
 	}
-	UpdateConfiguration(cfgFile, *configuration, true)
+	configuration := Configuration{
+		ServeConfig:    StoredServe,
+		ProjectConfigs: currentProjects,
+	}
+	UpdateConfiguration(cfgFile, configuration, true)
 }
 
 func generateHash(input string) string {
@@ -110,8 +115,14 @@ func (project *Project) GetHash(index int) string {
 }
 
 // NewProject For creating new Project
-func NewProject() Project {
-	return Project{UUID: uuid.New().String(), Secret: generateRandomString(16, 5)}
+func NewProject(ipCIDRs ...string) Project {
+	tokens := []TokenDetail{}
+	for _, ipCIDR := range ipCIDRs {
+		tokens = append(tokens, NewToken(ipCIDR))
+	}
+	projectUUID := uuid.New().String()
+	secret := generateRandomString(16, 5)
+	return Project{UUID: projectUUID, Secret: secret, Tokens: tokens}
 }
 
 // NewToken For creating new Token
@@ -138,15 +149,65 @@ func FindProjectWithUUID(projectUUID string) (Project, error) {
 			return project, nil
 		}
 	}
-	return NewProject(), errors.New(constants.ErrorNoProjectFound)
+	return Project{}, errors.New(constants.ErrorNoProjectFound)
 }
 
 // FindProject for finding the Project from StoredProjects
 func FindProject(name, projectUUID string) (Project, error) {
+	// fmt.Println(name)
+	// fmt.Println(projectUUID)
 	for _, project := range StoredProjects {
 		if project.UUID == projectUUID || project.Name == name {
 			return project, nil
 		}
 	}
-	return NewProject(), errors.New(constants.ErrorNoProjectFound)
+	return Project{}, errors.New(constants.ErrorNoProjectFound)
+}
+
+func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
+	// config.StoredProjects
+	// projects := viper.AllSettings()["projects"].([]interface{})
+
+	projects := []Project{}
+	if prjs, ok := settingsMap["projects"]; ok {
+
+		for _, prj := range prjs.([]interface{}) {
+			p := prj.(map[string]interface{})
+			projectStruct := Project{
+				Tokens: []TokenDetail{},
+			}
+			for key, value := range p {
+				switch key {
+				case "name":
+					projectStruct.Name = value.(string)
+				case "error_hook":
+					projectStruct.ErrorHook = value.(string)
+				case "pre_hook":
+					projectStruct.PreHook = value.(string)
+				case "post_hook":
+					projectStruct.PostHook = value.(string)
+				case "remote_path":
+					projectStruct.RemotePath = value.(string)
+				case "work_dir":
+					projectStruct.WorkDir = value.(string)
+				case "uuid":
+					projectStruct.UUID = value.(string)
+				case "secret":
+					projectStruct.Secret = value.(string)
+				}
+			}
+
+			tokens := p["tokens"].([]interface{})
+			for _, token := range tokens {
+				tokenStruct := TokenDetail{
+					WhitelistedNetwork: token.(map[string]interface{})["whitelistnet"].(string),
+					Token:              token.(map[string]interface{})["token"].(string),
+				}
+				projectStruct.Tokens = append(projectStruct.Tokens, tokenStruct)
+			}
+			projects = append(projects, projectStruct)
+		}
+	}
+	StoredProjects = projects
+	// return projects
 }

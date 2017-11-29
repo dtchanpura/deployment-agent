@@ -41,16 +41,14 @@ var addCmd = &cobra.Command{
 	Long:  `Projects can be added with this command including the hooks, its IPs etc.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.ParseFlags(args)
-		project := config.NewProject()
+		// var newTokens []config.TokenDetail
+		// // project.Tokens = []Token{}
+		project := config.NewProject(cidr...)
 		project.Name = name
 		project.PreHook = preHook
 		project.PostHook = postHook
 		project.ErrorHook = errorHook
 		project.WorkDir = workDir
-		// project.Tokens = []Token{}
-		for _, ipCIDR := range cidr {
-			project.Tokens = append(project.Tokens, config.NewToken(ipCIDR))
-		}
 		// bts, _ := yaml.Marshal(project)
 		if err := project.ValidateProjectConfiguration(); err.Error() == constants.ErrorInvalidConfiguration {
 			fmt.Println(err)

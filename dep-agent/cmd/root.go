@@ -95,7 +95,8 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 		viper.UnmarshalKey("serve", &config.StoredServe)
-		err := viper.UnmarshalKey("projects", &config.StoredProjects)
+		// err := viper.UnmarshalKey("projects", &config.StoredProjects)
+		config.DecodeProjectConfiguration(viper.AllSettings())
 		// err = viper.Unmarshal(&config.StoredConfiguration)
 		if err != nil {
 			fmt.Println(err)
