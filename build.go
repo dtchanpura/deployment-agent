@@ -2,6 +2,7 @@ package main
 
 import (
 	"archive/tar"
+	"bytes"
 	"compress/gzip"
 	"flag"
 	"fmt"
@@ -13,6 +14,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -87,10 +89,27 @@ func parseFlags() {
 	flag.Parse()
 }
 
+func buildStamp() string {
+	layout := "2006-01-02 15:04:05 MST"
+	// If SOURCE_DATE_EPOCH is set, use that.
+	if s, _ := strconv.ParseInt(os.Getenv("SOURCE_DATE_EPOCH"), 10, 64); s > 0 {
+		return time.Unix(s, 0).Format(layout)
+	}
+
+	// Try to get the timestamp of the latest commit.
+	bs, err := runError("git", "show", "-s", "--format=%ct")
+	if err != nil {
+		// Fall back to "now".
+		return time.Now().Format(layout)
+	}
+
+	s, _ := strconv.ParseInt(string(bs), 10, 64)
+	return time.Unix(s, 0).Format(layout)
+}
+
 func updateVersion(version string) error {
 	versionFile := "dep-agent/cmd/version.go"
 	var outputBytes []byte
-	buildDate := time.Now().Format("2006-01-02 15:04:05 MST")
 
 	rv, rverr := regexp.Compile("version = \".*\"")
 	if rverr != nil {
@@ -105,7 +124,7 @@ func updateVersion(version string) error {
 		return err
 	}
 	replaceStringVersion := fmt.Sprintf("version = \"%s\"", version)
-	replaceStringDate := fmt.Sprintf("buildDate = \"%s\"", buildDate)
+	replaceStringDate := fmt.Sprintf("buildDate = \"%s\"", buildStamp())
 	outputBytes = rv.ReplaceAll(outputBytes, []byte(replaceStringVersion))
 	outputBytes = rb.ReplaceAll(outputBytes, []byte(replaceStringDate))
 	f, err := os.OpenFile(versionFile, os.O_WRONLY, 0644)
@@ -240,6 +259,19 @@ func runCommand(cmd string, t target) {
 
 func clean() {
 	// rmr("build", "")
+}
+
+func runError(cmd string, args ...string) ([]byte, error) {
+	if debug {
+		t0 := time.Now()
+		log.Println("runError:", cmd, strings.Join(args, " "))
+		defer func() {
+			log.Println("... in", time.Since(t0))
+		}()
+	}
+	ecmd := exec.Command(cmd, args...)
+	bs, err := ecmd.CombinedOutput()
+	return bytes.TrimSpace(bs), err
 }
 
 func runPrint(cmd string, args ...string) {
