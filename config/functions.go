@@ -188,8 +188,8 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 					projectStruct.PreHook = value.(string)
 				case "post_hook":
 					projectStruct.PostHook = value.(string)
-				case "remote_path":
-					projectStruct.RemotePath = value.(string)
+				// case "remote_path":
+				// projectStruct.RemotePath = value.(string)
 				case "work_dir":
 					projectStruct.WorkDir = value.(string)
 				case "uuid":
