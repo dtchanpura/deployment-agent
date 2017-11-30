@@ -24,23 +24,22 @@ func executeHooks(project config.Project) {
 	var isSuccess bool
 	isSuccess = true
 	if project.PreHook != "" {
-		err := executeScript(project.WorkDir, project.PreHook)
+		err := executeScript(project.WorkDir, project.PreHook, project.PreHookArgs...)
 		if err != nil {
-			fmt.Printf("error occurred: ")
-			fmt.Println(err)
+			fmt.Printf("error occurred: %v\n", err)
 			isSuccess = false
 		}
 	}
 	if project.PostHook != "" {
-		err := executeScript(project.WorkDir, project.PostHook)
+		err := executeScript(project.WorkDir, project.PostHook, project.PostHookArgs...)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Printf("error occurred: %v\n", err)
 			isSuccess = false
 		}
 	}
 	if project.ErrorHook != "" && !isSuccess {
 		fmt.Println("Error occurred in running prehook and/or posthook")
-		err := executeScript(project.WorkDir, project.ErrorHook)
+		err := executeScript(project.WorkDir, project.ErrorHook, project.ErrorHookArgs...)
 		if err != nil {
 			fmt.Println(err)
 		}
