@@ -28,6 +28,7 @@ var targets = map[string]target{
 		name:       "deployment-agent",
 		binaryName: "dep-agent",
 		buildPkg:   "cgit.dcpri.me/deployment-agent/dep-agent",
+		buildDir:   "build",
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
 			{src: "../README.md", dst: "README.txt", perm: 0644},
@@ -42,6 +43,7 @@ type target struct {
 	description  string
 	buildPkg     string
 	binaryName   string
+	buildDir     string
 	archiveFiles []archiveFile
 }
 
@@ -214,7 +216,13 @@ func runCommand(cmd string, t target) {
 		build(t)
 	case "tar":
 		buildTar(t)
+	case "clean":
+		clean()
 	}
+}
+
+func clean() {
+	// rmr("build", "")
 }
 
 func runPrint(cmd string, args ...string) {
@@ -231,5 +239,14 @@ func runPrint(cmd string, args ...string) {
 	err := ecmd.Run()
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func rmr(paths ...string) {
+	for _, path := range paths {
+		if debug {
+			log.Println("rm -r", path)
+		}
+		os.RemoveAll(path)
 	}
 }
