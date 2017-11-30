@@ -50,6 +50,13 @@ type target struct {
 	archiveFiles []archiveFile
 }
 
+func (t target) BinaryName() string {
+	if goos == "windows" {
+		return t.binaryName + ".exe"
+	}
+	return t.binaryName
+}
+
 type archiveFile struct {
 	src  string
 	dst  string
@@ -156,6 +163,34 @@ func build(t target) {
 	runPrint("go", args...)
 }
 
+func install(target target) {
+
+	cwd, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	os.Setenv("GOBIN", filepath.Join(cwd, "bin"))
+	args := []string{"install", "-v"}
+	//"-ldflags", ldflags()}
+	// if pkgdir != "" {
+	// 	args = append(args, "-pkgdir", pkgdir)
+	// }
+	// if len(tags) > 0 {
+	// 	args = append(args, "-tags", strings.Join(tags, " "))
+	// }
+	// if installSuffix != "" {
+	// 	args = append(args, "-installsuffix", installSuffix)
+	// }
+	// if race {
+	// 	args = append(args, "-race")
+	// }
+	args = append(args, target.buildPkg)
+
+	os.Setenv("GOOS", goos)
+	os.Setenv("GOARCH", goarch)
+	runPrint("go", args...)
+}
+
 func buildTar(t target) {
 	name := archiveName(t)
 	filename := name + ".tar.gz"
@@ -167,6 +202,10 @@ func buildTar(t target) {
 	}
 	tarGz(filename, t.archiveFiles)
 	fmt.Println(filename)
+}
+
+func clean() {
+	rmr("bin", "")
 }
 
 func buildArch() string {
@@ -183,13 +222,6 @@ func archiveName(target target) string {
 		return filepath.Join(target.buildDir, filename)
 	}
 	return filename
-}
-
-func (t target) BinaryName() string {
-	if goos == "windows" {
-		return t.binaryName + ".exe"
-	}
-	return t.binaryName
 }
 
 func tarGz(out string, files []archiveFile) {
@@ -255,10 +287,6 @@ func runCommand(cmd string, t target) {
 	case "clean":
 		clean()
 	}
-}
-
-func clean() {
-	// rmr("build", "")
 }
 
 func runError(cmd string, args ...string) ([]byte, error) {
