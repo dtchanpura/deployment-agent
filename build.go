@@ -32,9 +32,9 @@ var targets = map[string]target{
 		buildDir:   "bin",
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
-			{src: "../README.md", dst: "README.txt", perm: 0644},
-			// {src: "../LICENSE", dst: "LICENSE.txt", perm: 0644},
-			// {src: "../AUTHORS", dst: "AUTHORS.txt", perm: 0644},
+			{src: "README.md", dst: "README.txt", perm: 0644},
+			// {src: "LICENSE", dst: "LICENSE.txt", perm: 0644},
+			// {src: "AUTHORS", dst: "AUTHORS.txt", perm: 0644},
 		},
 	},
 }
@@ -88,7 +88,7 @@ func parseFlags() {
 }
 
 func updateVersion(version string) error {
-	versionFile := "../dep-agent/cmd/version.go"
+	versionFile := "dep-agent/cmd/version.go"
 	var outputBytes []byte
 	buildDate := time.Now().Format("2006-01-02 15:04:05 MST")
 
