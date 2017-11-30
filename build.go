@@ -10,6 +10,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"runtime"
 	"strings"
@@ -28,7 +29,7 @@ var targets = map[string]target{
 		name:       "deployment-agent",
 		binaryName: "dep-agent",
 		buildPkg:   "cgit.dcpri.me/deployment-agent/dep-agent",
-		buildDir:   "build",
+		buildDir:   "bin",
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
 			{src: "../README.md", dst: "README.txt", perm: 0644},
@@ -53,14 +54,18 @@ type archiveFile struct {
 	perm os.FileMode
 }
 
+func init() {
+	for targetName := range targets {
+		if targets[targetName].buildDir != "" {
+			for i := range targets[targetName].archiveFiles {
+				targets[targetName].archiveFiles[i].src = filepath.Join(targets[targetName].buildDir, targets[targetName].binaryName)
+			}
+		}
+	}
+}
+
 func main() {
 	parseFlags()
-
-	err := updateVersion(version)
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
 
 	targetName := "dep-agent"
 	if flag.NArg() == 0 {
@@ -117,7 +122,15 @@ func updateVersion(version string) error {
 }
 
 func build(t target) {
+	err := updateVersion(version)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 	args := []string{"build"}
+	if t.buildDir != "" {
+		args = append(args, "-o", filepath.Join(t.buildDir, t.BinaryName()))
+	}
 	args = append(args, t.buildPkg)
 	os.Setenv("GOOS", goos)
 	os.Setenv("GOARCH", goarch)
@@ -146,7 +159,11 @@ func buildArch() string {
 }
 
 func archiveName(target target) string {
-	return fmt.Sprintf("%s-%s-%s", target.name, buildArch(), version)
+	filename := fmt.Sprintf("%s-%s-%s", target.name, buildArch(), version)
+	if target.buildDir != "" {
+		return filepath.Join(target.buildDir, filename)
+	}
+	return filename
 }
 
 func (t target) BinaryName() string {
