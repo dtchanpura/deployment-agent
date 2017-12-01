@@ -15,6 +15,9 @@
 package cmd
 
 import (
+	"fmt"
+
+	"cgit.dcpri.me/deployment-agent/config"
 	"cgit.dcpri.me/deployment-agent/manage"
 	"github.com/spf13/cobra"
 )
@@ -25,7 +28,7 @@ var listCmd = &cobra.Command{
 	Short: "Lists all the projects available with their UUIDs",
 	Long:  `After adding the projects if one needs to check the `,
 	Run: func(cmd *cobra.Command, args []string) {
-		manage.ListProjects()
+		fmt.Println(manage.ListProjects(config.StoredProjects))
 	},
 }
 
