@@ -2,6 +2,7 @@ package manage
 
 import (
 	"io/ioutil"
+	"os"
 	"testing"
 
 	"cgit.dcpri.me/deployment-agent/config"
@@ -23,6 +24,17 @@ func TestAddProject(t *testing.T) {
 	}
 
 	AddProject(cfgFile, project)
+
+	project = config.Project{
+		UUID: "test-uuid-new0",
+	}
+	project.Tokens = append([]config.TokenDetail{}, config.TokenDetail{
+		Token:              "zZZzZZzZZz",
+		WhitelistedNetwork: "0.0.0.0/0",
+	})
+
+	AddProject(cfgFile, project)
+	os.Remove(cfgFile)
 	// testConfig.ProjectConfigs
 	// os.Open(cfgFile)
 }
