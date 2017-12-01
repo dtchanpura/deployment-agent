@@ -1,0 +1,12 @@
+[Unit]
+Description=Deployment Agent Listener
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/$USERNAME
+ExecStart=/home/$USERNAME/go/bin/dep-agent serve --watch-config
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
