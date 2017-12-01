@@ -4,7 +4,6 @@ import (
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/base64"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
@@ -14,11 +13,12 @@ import (
 
 	"cgit.dcpri.me/deployment-agent/constants"
 	"github.com/google/uuid"
+	yaml "gopkg.in/yaml.v2"
 )
 
 // UpdateConfiguration For updating the configuration.
 func UpdateConfiguration(cfgFile string, configuration Configuration, overwrite bool) error {
-	configBytes, err := json.Marshal(configuration)
+	configBytes, err := yaml.Marshal(configuration)
 	if err != nil {
 		return err
 	}
@@ -174,12 +174,12 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 	projects := []Project{}
 	if prjs, ok := settingsMap["projects"]; ok {
 		for _, prj := range prjs.([]interface{}) {
-			p := prj.(map[string]interface{})
+			p := prj.(map[interface{}]interface{})
 			projectStruct := Project{
 				Tokens: []TokenDetail{},
 			}
 			for key, value := range p {
-				switch key {
+				switch key.(string) {
 				case "name":
 					projectStruct.Name = value.(string)
 				case "error_hook":
@@ -202,9 +202,15 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 			if tokens, hasTokens := p["tokens"]; hasTokens {
 				// tokens := p["tokens"].([]interface{})
 				for _, token := range tokens.([]interface{}) {
-					tokenStruct := TokenDetail{
-						WhitelistedNetwork: token.(map[string]interface{})["whitelistnet"].(string),
-						Token:              token.(map[string]interface{})["token"].(string),
+					token := token.(map[interface{}]interface{})
+					tokenStruct := TokenDetail{}
+					for tokenK, tokenV := range token {
+						switch tokenK.(string) {
+						case "whitelistnet":
+							tokenStruct.WhitelistedNetwork = tokenV.(string)
+						case "token":
+							tokenStruct.Token = tokenV.(string)
+						}
 					}
 					projectStruct.Tokens = append(projectStruct.Tokens, tokenStruct)
 				}

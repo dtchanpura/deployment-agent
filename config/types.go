@@ -33,6 +33,6 @@ type Project struct {
 // repository with different tokens
 type TokenDetail struct {
 	Token              string `yaml:"token" json:"token"`
-	WhitelistedNetwork string `yaml:"whitelist_net" json:"whitelistnet"` // CIDR notation
+	WhitelistedNetwork string `yaml:"whitelistnet" json:"whitelistnet"` // CIDR notation
 	Name               string `yaml:"name" json:"name"`
 }
