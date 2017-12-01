@@ -59,7 +59,7 @@ func executeScript(workDir, filePath string, args ...string) error {
 		if err != nil {
 			return err
 		}
-		fmt.Printf("Command Output: %s", string(bts[:]))
+		fmt.Printf("Command Output: %s\n", string(bts[:]))
 		return nil
 	}
 	return errors.New(constants.ErrorFileNotExecutable)
