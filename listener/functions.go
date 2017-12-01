@@ -48,7 +48,7 @@ func executeHooks(project config.Project) {
 
 func executeScript(workDir, filePath string, args ...string) error {
 	if fileInfo, err := os.Stat(filePath); !os.IsPermission(err) && !os.IsNotExist(err) && fileInfo.Mode()&0111 != 0 {
-		cmd := exec.Command(filePath)
+		cmd := exec.Command(filePath, args...)
 		if dirInfo, err := os.Stat(workDir); err == nil && dirInfo.IsDir() {
 			cmd.Dir = workDir
 		} else {

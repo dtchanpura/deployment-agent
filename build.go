@@ -20,10 +20,12 @@ import (
 )
 
 var (
-	goarch  string
-	goos    string
-	debug   = os.Getenv("BUILDDEBUG") != ""
-	version string
+	goarch      string
+	goos        string
+	debug       = os.Getenv("BUILDDEBUG") != ""
+	newVersion  string
+	version     string
+	versionFile = "dep-agent/cmd/version.go"
 )
 
 var targets = map[string]target{
@@ -71,6 +73,21 @@ func init() {
 			}
 		}
 	}
+	if version == "0.0.0" || version == "" {
+		versionFileBytes, errF := ioutil.ReadFile(versionFile)
+		if errF != nil {
+			fmt.Println(errF)
+		}
+		rv, rverr := regexp.Compile("version = \".*\"")
+		if rverr != nil {
+			fmt.Println(rverr)
+		}
+		versionBytes := rv.Find(versionFileBytes)
+		rvt, _ := regexp.Compile("\".*\"")
+		versionBytes = rvt.Find(versionBytes)
+		fmt.Println(string(versionBytes))
+		version = string(versionBytes[1 : len(versionBytes)-1])
+	}
 }
 
 func main() {
@@ -92,7 +109,7 @@ func main() {
 func parseFlags() {
 	flag.StringVar(&goarch, "goarch", runtime.GOARCH, "GOARCH")
 	flag.StringVar(&goos, "goos", runtime.GOOS, "GOOS")
-	flag.StringVar(&version, "version", "0.0.0", "Define new version")
+	flag.StringVar(&newVersion, "version", "0.0.0", "Define new version")
 	flag.Parse()
 }
 
@@ -114,41 +131,51 @@ func buildStamp() string {
 	return time.Unix(s, 0).Format(layout)
 }
 
-func updateVersion(version string) error {
-	versionFile := "dep-agent/cmd/version.go"
+func updateVersion() error {
 	var outputBytes []byte
 
-	rv, rverr := regexp.Compile("version = \".*\"")
-	if rverr != nil {
-		return rverr
-	}
-	rb, rberr := regexp.Compile("buildDate = \".*\"")
-	if rberr != nil {
-		return rberr
-	}
 	outputBytes, err := ioutil.ReadFile(versionFile)
 	if err != nil {
 		return err
 	}
-	replaceStringVersion := fmt.Sprintf("version = \"%s\"", version)
+	// Replace build version
+	if newVersion != "" && newVersion != "0.0.0" && newVersion != version {
+		rv, rverr := regexp.Compile("version = \".*\"")
+		if rverr != nil {
+			return rverr
+		}
+
+		replaceStringVersion := fmt.Sprintf("version = \"%s\"", version)
+		outputBytes = rv.ReplaceAll(outputBytes, []byte(replaceStringVersion))
+	}
+	// Replace build date
+	rb, rberr := regexp.Compile("buildDate = \".*\"")
+	if rberr != nil {
+		return rberr
+	}
+	currentFileBytes, errF := ioutil.ReadFile(versionFile)
+	if errF != nil {
+		return errF
+	}
 	replaceStringDate := fmt.Sprintf("buildDate = \"%s\"", buildStamp())
-	outputBytes = rv.ReplaceAll(outputBytes, []byte(replaceStringVersion))
 	outputBytes = rb.ReplaceAll(outputBytes, []byte(replaceStringDate))
-	f, err := os.OpenFile(versionFile, os.O_WRONLY, 0644)
-	if err != nil {
-		return err
+	if !bytes.Equal(currentFileBytes, outputBytes) {
+		f, err := os.OpenFile(versionFile, os.O_WRONLY, 0644)
+		if err != nil {
+			return err
+		}
+		n, err := f.Write(outputBytes)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("%d bytes written\n", n)
+		f.Close()
 	}
-	n, err := f.Write(outputBytes)
-	if err != nil {
-		return err
-	}
-	fmt.Printf("%d bytes written\n", n)
-	f.Close()
 	return nil
 }
 
 func build(t target) {
-	err := updateVersion(version)
+	err := updateVersion()
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
@@ -192,13 +219,13 @@ func install(target target) {
 }
 
 func buildTar(t target) {
+	build(t)
 	name := archiveName(t)
 	filename := name + ".tar.gz"
-	build(t)
 	for i := range t.archiveFiles {
 		t.archiveFiles[i].src = strings.Replace(t.archiveFiles[i].src, "{{binary}}", t.BinaryName(), 1)
 		t.archiveFiles[i].dst = strings.Replace(t.archiveFiles[i].dst, "{{binary}}", t.BinaryName(), 1)
-		t.archiveFiles[i].dst = name + "/" + t.archiveFiles[i].dst
+		t.archiveFiles[i].dst = strings.TrimLeft(name, t.buildDir+"/") + "/" + t.archiveFiles[i].dst
 	}
 	tarGz(filename, t.archiveFiles)
 	fmt.Println(filename)
