@@ -23,15 +23,14 @@ import (
 // deleteCmd represents the delete command
 var deleteCmd = &cobra.Command{
 	Use:   "delete",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Deleting a project (Not Supported)",
+	Long: `Deletes the Project matching provided UUID.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Currently it is not supported. To delete a project just edit the configuration
+file and delete the part starting with "- name:"  which is the start of new element.
+`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("delete called")
+		fmt.Println("delete is not yet supported.")
 	},
 }
 
