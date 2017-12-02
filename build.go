@@ -145,7 +145,7 @@ func updateVersion() error {
 			return rverr
 		}
 
-		replaceStringVersion := fmt.Sprintf("version = \"%s\"", version)
+		replaceStringVersion := fmt.Sprintf("version = \"%s\"", newVersion)
 		outputBytes = rv.ReplaceAll(outputBytes, []byte(replaceStringVersion))
 	}
 	// Replace build date
