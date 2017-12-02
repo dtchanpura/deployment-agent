@@ -27,5 +27,9 @@ func TestListProjects(t *testing.T) {
 		t.Errorf("strings don't match.")
 	}
 
+	noProjectsOutput := "No projects found. Add new one using add command.\n"
+	if ListProjects([]config.Project{}) != noProjectsOutput {
+		fmt.Println(ListProjects([]config.Project{}))
+	}
 	// fmt.Println(ListProjects(projects))
 }
