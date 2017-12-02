@@ -35,8 +35,8 @@ func generateResponse(uuid, token, clientIP string) Response {
 			response.Ok = true
 		}
 	} else {
-		response.StatusCode = 403
-		response.Message = "Invalid Token"
+		response.StatusCode = http.StatusUnauthorized
+		response.Message = "Unauthorized"
 		response.Ok = false
 	}
 	return response
