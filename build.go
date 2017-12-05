@@ -147,29 +147,31 @@ func updateVersion() error {
 
 		replaceStringVersion := fmt.Sprintf("version = \"%s\"", newVersion)
 		outputBytes = rv.ReplaceAll(outputBytes, []byte(replaceStringVersion))
-	}
-	// Replace build date
-	rb, rberr := regexp.Compile("buildDate = \".*\"")
-	if rberr != nil {
-		return rberr
-	}
-	currentFileBytes, errF := ioutil.ReadFile(versionFile)
-	if errF != nil {
-		return errF
-	}
-	replaceStringDate := fmt.Sprintf("buildDate = \"%s\"", buildStamp())
-	outputBytes = rb.ReplaceAll(outputBytes, []byte(replaceStringDate))
-	if !bytes.Equal(currentFileBytes, outputBytes) {
-		f, err := os.OpenFile(versionFile, os.O_WRONLY, 0644)
-		if err != nil {
-			return err
+
+		// Replace build date
+		rb, rberr := regexp.Compile("buildDate = \".*\"")
+		if rberr != nil {
+			return rberr
 		}
-		n, err := f.Write(outputBytes)
-		if err != nil {
-			return err
+		currentFileBytes, errF := ioutil.ReadFile(versionFile)
+		if errF != nil {
+			return errF
 		}
-		fmt.Printf("%d bytes written\n", n)
-		f.Close()
+		replaceStringDate := fmt.Sprintf("buildDate = \"%s\"", buildStamp())
+		outputBytes = rb.ReplaceAll(outputBytes, []byte(replaceStringDate))
+		if !bytes.Equal(currentFileBytes, outputBytes) {
+			f, err := os.OpenFile(versionFile, os.O_WRONLY, 0644)
+			if err != nil {
+				return err
+			}
+			n, err := f.Write(outputBytes)
+			if err != nil {
+				return err
+			}
+			fmt.Printf("%d bytes written\n", n)
+			f.Close()
+		}
+
 	}
 	return nil
 }
