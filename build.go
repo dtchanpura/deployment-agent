@@ -66,13 +66,13 @@ type archiveFile struct {
 }
 
 func init() {
-	for targetName := range targets {
-		if targets[targetName].buildDir != "" {
-			for i := range targets[targetName].archiveFiles {
-				targets[targetName].archiveFiles[i].src = filepath.Join(targets[targetName].buildDir, targets[targetName].binaryName)
-			}
-		}
-	}
+	// for targetName := range targets {
+	// 	if targets[targetName].buildDir != "" {
+	// 		for i := range targets[targetName].archiveFiles {
+	// 			targets[targetName].archiveFiles[i].src = filepath.Join(targets[targetName].buildDir, targets[targetName].archiveFiles[i].src)
+	// 		}
+	// 	}
+	// }
 	if version == "0.0.0" || version == "" {
 		versionFileBytes, errF := ioutil.ReadFile(versionFile)
 		if errF != nil {
@@ -85,7 +85,9 @@ func init() {
 		versionBytes := rv.Find(versionFileBytes)
 		rvt, _ := regexp.Compile("\".*\"")
 		versionBytes = rvt.Find(versionBytes)
-		fmt.Println(string(versionBytes))
+		if debug {
+			log.Printf("Current version: %s", versionBytes)
+		}
 		version = string(versionBytes[1 : len(versionBytes)-1])
 	}
 }
@@ -168,7 +170,9 @@ func updateVersion() error {
 			if err != nil {
 				return err
 			}
-			fmt.Printf("%d bytes written\n", n)
+			if debug {
+				log.Printf("%d bytes written\n", n)
+			}
 			f.Close()
 		}
 
@@ -225,7 +229,7 @@ func buildTar(t target) {
 	name := archiveName(t)
 	filename := name + ".tar.gz"
 	for i := range t.archiveFiles {
-		t.archiveFiles[i].src = strings.Replace(t.archiveFiles[i].src, "{{binary}}", t.BinaryName(), 1)
+		t.archiveFiles[i].src = strings.Replace(t.archiveFiles[i].src, "{{binary}}", "bin/"+t.BinaryName(), 1)
 		t.archiveFiles[i].dst = strings.Replace(t.archiveFiles[i].dst, "{{binary}}", t.BinaryName(), 1)
 		t.archiveFiles[i].dst = strings.TrimLeft(name, t.buildDir+"/") + "/" + t.archiveFiles[i].dst
 	}
@@ -267,6 +271,9 @@ func tarGz(out string, files []archiveFile) {
 
 	for _, f := range files {
 		sf, verr := os.Open(f.src)
+		if debug {
+			log.Printf("Source: %s, Dest: %s with Perm: %s\n", f.src, f.dst, f.perm)
+		}
 		if verr != nil {
 			log.Fatal(verr)
 		}
