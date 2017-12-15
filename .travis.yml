@@ -31,7 +31,7 @@ notifications:
 # flunk the build and immediately stop. It's sorta like having
 # set -e enabled in bash.
 before_script:
-    - go get github.com/golang/dep
+    - go get github.com/golang/dep/cmd/dep
     - dep ensure
     - GO_FILES=$(find . -iname '*.go' -type f | grep -v /vendor/) # All the .go files, excluding vendor/
     - go get github.com/golang/lint/golint                        # Linter
