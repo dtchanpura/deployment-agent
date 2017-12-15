@@ -11,7 +11,7 @@ import (
 	"net"
 	"os"
 
-	"cgit.dcpri.me/deployment-agent/constants"
+	"github.com/dtchanpura/deployment-agent/constants"
 	"github.com/google/uuid"
 	yaml "gopkg.in/yaml.v2"
 )

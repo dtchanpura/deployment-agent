@@ -3,7 +3,7 @@ package manage
 import (
 	"fmt"
 
-	"cgit.dcpri.me/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/config"
 )
 
 // AddProject for adding the project

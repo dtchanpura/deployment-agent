@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"cgit.dcpri.me/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/config"
 )
 
 var (

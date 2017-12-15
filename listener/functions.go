@@ -6,8 +6,8 @@ import (
 	"os"
 	"os/exec"
 
-	"cgit.dcpri.me/deployment-agent/config"
-	"cgit.dcpri.me/deployment-agent/constants"
+	"github.com/dtchanpura/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/constants"
 )
 
 func validateToken(projectUUID, token, clientIP string) bool {

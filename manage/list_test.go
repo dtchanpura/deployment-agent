@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"cgit.dcpri.me/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/config"
 )
 
 func TestListProjects(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"cgit.dcpri.me/deployment-agent/constants"
+	"github.com/dtchanpura/deployment-agent/constants"
 )
 
 // StoredProjects Contains the latest stored projects

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"cgit.dcpri.me/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/config"
 	"github.com/gin-gonic/gin"
 )
 
