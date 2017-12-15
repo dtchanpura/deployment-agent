@@ -23,7 +23,7 @@ e.g. in `/usr/local/bin` or `/usr/bin`
 
 ## Example
 
-![sequence_diagram](images/sequence.svg)
+![sequence_diagram](images/sequence.png)
 
 Example Configuration Structure
 

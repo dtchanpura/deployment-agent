@@ -1,93 +1,118 @@
 <?xml version="1.0" standalone="yes"?>
-<svg height="395.1875" version="1.1" width="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; top: -0.484375px; background-color: white">
-    <!-- width = 710.875 -->
+<svg height="480.828125" version="1.1" width="661.6796875" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative;">
     <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc>
     <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-        <marker id="raphael-marker-endblock55-objnl45e" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+        <path stroke-linecap="round" d="M5,0 0,2.5 5,5z" id="raphael-marker-block" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path>
+        <marker id="raphael-marker-endblock55-objxuicv" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             </use>
         </marker>
-        <marker id="raphael-marker-endblock55-objc4nxd" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+        <marker id="raphael-marker-endblock55-objxrxz5" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             </use>
         </marker>
-        <marker id="raphael-marker-endblock55-obj5b9dn" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+        <marker id="raphael-marker-endblock55-objeu9x1" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             </use>
         </marker>
-        <marker id="raphael-marker-endblock55-objq7ri4" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+        <marker id="raphael-marker-endblock55-objaos7n" markerHeight="5" markerWidth="5" orient="auto" refX="2.5" refY="2.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#raphael-marker-block" transform="rotate(180 2.5 2.5) scale(1,1)" stroke-width="1.0000" fill="#000" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
             </use>
         </marker>
     </defs>
-    <rect x="10" y="20" width="106.40625" height="38.484375" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="10" y="20" width="77.609375" height="38" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <rect x="19.984375" y="30" width="86.40625" height="18.484375" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="20" y="30" width="57.609375" height="18" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <text x="63.203125" y="39.2421875" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="5.765625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">ci_server</tspan>
+    <text x="48.8046875" y="39" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">TGUser</tspan>
     </text>
-    <rect x="10" y="336.703125" width="106.40625" height="38.484375" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="10" y="422.828125" width="77.609375" height="38" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <rect x="19.984375" y="346.703125" width="86.40625" height="18.484375" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="20" y="432.828125" width="57.609375" height="18" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <text x="63.203125" y="355.9453125" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="5.765625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">ci_server</tspan>
+    <text x="48.8046875" y="441.828125" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">TGUser</tspan>
     </text>
-    <path fill="none" stroke="#000000" d="M63.203125,58.484375L63.203125,336.703125" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <path fill="none" stroke="#000000" d="M48.8046875,58L48.8046875,422.828125" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </path>
-    <rect x="313.234375" y="20" width="135.21875" height="38.484375" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="270.0390625" y="20" width="96.8125" height="38" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <rect x="323.234375" y="30" width="115.21875" height="18.484375" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="280.03125" y="30" width="76.8125" height="18" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <text x="380.84375" y="39.2421875" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="5.765625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">agent_server</tspan>
+    <text x="318.4453125" y="39" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">TGServer</tspan>
     </text>
-    <rect x="313.234375" y="336.703125" width="135.21875" height="38.484375" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="270.0390625" y="422.828125" width="96.8125" height="38" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <rect x="323.234375" y="346.703125" width="115.21875" height="18.484375" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="280.03125" y="432.828125" width="76.8125" height="18" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <text x="380.84375" y="355.9453125" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="5.765625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">agent_server</tspan>
+    <text x="318.4453125" y="441.828125" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">TGServer</tspan>
     </text>
-    <path fill="none" stroke="#000000" d="M380.84375,58.484375L380.84375,336.703125" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <path fill="none" stroke="#000000" d="M318.4453125,58L318.4453125,422.828125" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </path>
-    <rect x="102" y="74.375" width="240.03125" height="18.21875" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="525.2734375" y="20" width="106.40625" height="38" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <text x="222.0234375" y="83.484375" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="5.890625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Sends a Valid GET Request</tspan>
+    <rect x="535.265625" y="30" width="86.40625" height="18" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <text x="578.4765625" y="39" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">BotServer</tspan>
     </text>
-    <path fill="none" stroke="#000000" d="M63.203125,96.703125C63.203125,96.703125,335.37187994481064,96.703125,375.8383769568687,96.703125" stroke-width="2" marker-end="url(#raphael-marker-endblock55-objnl45e)" stroke-dasharray="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="525.2734375" y="422.828125" width="106.40625" height="38" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <rect x="535.265625" y="432.828125" width="86.40625" height="18" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <text x="578.4765625" y="441.828125" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">BotServer</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M578.4765625,58L578.4765625,422.828125" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </path>
-    <rect x="121.203125" y="103.109375" width="201.625" height="37.1875" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="106.8125" y="73.890625" width="153.625" height="18.21875" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <text x="222.0234375" y="121.703125" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="-3.59375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Sends 200 OK Response</tspan>
-        <tspan dy="19.2" x="222.0234375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">if token is valid</tspan>
+    <text x="183.625" y="83" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="5.890625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">1. Sends Message</tspan>
     </text>
-    <path fill="none" stroke="#000000" d="M380.84375,153.890625C380.84375,153.890625,108.67499505518936,153.890625,68.20849804313133,153.890625" stroke-width="2" marker-end="url(#raphael-marker-endblock55-objc4nxd)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <path fill="none" stroke="#000000" d="M48.8046875,96.21875C48.8046875,96.21875,276.62654593680054,96.21875,313.4473638775139,96.21875" stroke-width="2" marker-end="url(#raphael-marker-endblock55-objxuicv)" stroke-dasharray="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </path>
-    <rect x="400.84375" y="173.890625" width="192.421875" height="47.40625" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="376.4375" y="102.515625" width="144.015625" height="37.40625" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <rect x="405.828125" y="178.890625" width="182.421875" height="37.40625" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-    </rect>
-    <text x="497.0546875" y="197.59375" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="-3.703125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Executes configured</tspan>
-        <tspan dy="19.2" x="497.0546875" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">scripts</tspan>
+    <text x="448.4609375" y="121.21875" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="-3.703125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2. Sends JSON</tspan>
+        <tspan dy="19.2" x="448.4609375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">through Webhook</tspan>
     </text>
-    <rect x="92.390625" y="237.1875" width="259.234375" height="18.21875" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
-    </rect>
-    <text x="222.0234375" y="246.296875" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="5.890625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Sends a Invalid GET Request</tspan>
-    </text>
-    <path fill="none" stroke="#000000" d="M63.203125,259.515625C63.203125,259.515625,335.37187994481064,259.515625,375.8383769568687,259.515625" stroke-width="2" marker-end="url(#raphael-marker-endblock55-obj5b9dn)" stroke-dasharray="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <path fill="none" stroke="#000000" d="M318.4453125,153.625C318.4453125,153.625,537.4484310764819,153.625,573.4855653344284,153.625" stroke-width="2" marker-end="url(#raphael-marker-endblock55-objxrxz5)" stroke-dasharray="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </path>
-    <rect x="73.1875" y="265.921875" width="297.640625" height="37.1875" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="346.8515625" y="173.625" width="211.625" height="28" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </rect>
-    <text x="222.0234375" y="284.515625" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
-        <tspan dy="-3.59375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Sends 401 Unauthorized Response</tspan>
-        <tspan dy="19.2" x="222.0234375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">if token is invalid or IP</tspan>
+    <rect x="351.84375" y="178.625" width="201.625" height="18" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <text x="452.6640625" y="187.625" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">3. Processes the JSON</tspan>
     </text>
-    <path fill="none" stroke="#000000" d="M380.84375,316.703125C380.84375,316.703125,108.67499505518936,316.703125,68.20849804313133,316.703125" stroke-width="2" marker-end="url(#raphael-marker-endblock55-objq7ri4)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    <rect x="328.4375" y="207.921875" width="240.03125" height="37.40625" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <text x="448.4609375" y="226.625" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="-3.703125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">4. Sends Response with</tspan>
+        <tspan dy="19.2" x="448.4609375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Method and its parameters</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M578.4765625,259.03125C578.4765625,259.03125,359.47344392351806,259.03125,323.43630966557157,259.03125" stroke-width="2" marker-end="url(#raphael-marker-endblock55-objeu9x1)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </path>
+    <rect x="77.2109375" y="279.03125" width="221.234375" height="66.609375" rx="0" ry="0" fill="none" stroke="#000000" stroke-width="2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <rect x="82.203125" y="284.03125" width="211.234375" height="56.609375" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <text x="187.828125" y="312.3359375" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="-13.3046875" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">5. Parses the Response</tspan>
+        <tspan dy="19.2" x="187.828125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">and Creates a</tspan>
+        <tspan dy="19.2" x="187.828125" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">presentable message</tspan>
+    </text>
+    <rect x="58.796875" y="352.046875" width="249.640625" height="37.1875" rx="0" ry="0" fill="#ffffff" stroke="none" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+    </rect>
+    <text x="183.625" y="370.640625" text-anchor="middle" font-family="Andale Mono, monospace" font-size="16px" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: &quot;Andale Mono&quot;, monospace; font-size: 16px;">
+        <tspan dy="-3.59375" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">6. Sends Message back with</tspan>
+        <tspan dy="19.2" x="183.625" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">content from BotServer</tspan>
+    </text>
+    <path fill="none" stroke="#000000" d="M318.4453125,402.828125C318.4453125,402.828125,90.62345406319946,402.828125,53.80263612248609,402.828125" stroke-width="2" marker-end="url(#raphael-marker-endblock55-objaos7n)" stroke-dasharray="6,2" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
     </path>
 </svg>
