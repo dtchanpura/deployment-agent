@@ -10,7 +10,6 @@ import (
 // ListProjects for listing the projects
 func ListProjects(projects []config.Project) string {
 	b := new(bytes.Buffer)
-	// b.WriteString("-w")
 	if len(projects) > 0 {
 		fmt.Fprintln(b, "Following are the projects with their UUIDs")
 		for index, project := range projects {
