@@ -1,5 +1,7 @@
 # Deployment Agent
 
+[![Build Status](https://travis-ci.org/dtchanpura/deployment-agent.svg?branch=master)](https://travis-ci.org/dtchanpura/deployment-agent)
+
 ## Introduction
 
 Deployment Agent is a program which allows users to run a script on remote server
