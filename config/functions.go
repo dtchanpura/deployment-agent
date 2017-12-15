@@ -46,9 +46,7 @@ func UpdateProject(cfgFile string, project Project) error {
 }
 
 func updateProjects(cfgFile string, projects ...Project) {
-	for _, project := range projects {
-		StoredProjects = append(StoredProjects, project)
-	}
+	StoredProjects = append(StoredProjects, projects...)
 	configuration := Configuration{
 		ServeConfig:    StoredServe,
 		ProjectConfigs: StoredProjects,

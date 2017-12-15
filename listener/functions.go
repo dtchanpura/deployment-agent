@@ -21,8 +21,7 @@ func validateToken(projectUUID, token, clientIP string) bool {
 
 func executeHooks(project config.Project) {
 	// Execute PreHook (if any)
-	var isSuccess bool
-	isSuccess = true
+	isSuccess := true
 	if project.PreHook != "" {
 		err := executeScript(project.WorkDir, project.PreHook, project.PreHookArgs...)
 		if err != nil {

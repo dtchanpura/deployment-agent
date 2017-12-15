@@ -30,10 +30,11 @@ var (
 
 var targets = map[string]target{
 	"dep-agent": {
-		name:       "deployment-agent",
-		binaryName: "dep-agent",
-		buildPkg:   "github.com/dtchanpura/deployment-agent/dep-agent",
-		buildDir:   "bin",
+		name:        "deployment-agent",
+		binaryName:  "dep-agent",
+		buildPkg:    "github.com/dtchanpura/deployment-agent/dep-agent",
+		buildDir:    "bin",
+		description: "Deployment Agent target details.",
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},
 			{src: "README.md", dst: "README.txt", perm: 0644},
@@ -320,6 +321,8 @@ func runCommand(cmd string, t target) {
 		build(t)
 	case "tar":
 		buildTar(t)
+	case "install":
+		install(t)
 	case "clean":
 		clean()
 	}

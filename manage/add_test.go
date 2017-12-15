@@ -9,9 +9,8 @@ import (
 )
 
 var (
-	cfgFile    string
-	testConfig config.Configuration
-	project    config.Project
+	cfgFile string
+	project config.Project
 )
 
 func TestAddProject(t *testing.T) {
