@@ -18,9 +18,9 @@ import (
 	"fmt"
 	"os"
 
-	"cgit.dcpri.me/deployment-agent/config"
-	"cgit.dcpri.me/deployment-agent/constants"
-	"cgit.dcpri.me/deployment-agent/manage"
+	"github.com/dtchanpura/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/constants"
+	"github.com/dtchanpura/deployment-agent/manage"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
 )

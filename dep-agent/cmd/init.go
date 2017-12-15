@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"cgit.dcpri.me/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/config"
 	"github.com/spf13/cobra"
 )
 

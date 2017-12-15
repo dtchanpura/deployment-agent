@@ -17,8 +17,8 @@ package cmd
 import (
 	"fmt"
 
-	"cgit.dcpri.me/deployment-agent/config"
-	"cgit.dcpri.me/deployment-agent/manage"
+	"github.com/dtchanpura/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/manage"
 	"github.com/spf13/cobra"
 )
 

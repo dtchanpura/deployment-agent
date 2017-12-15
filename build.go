@@ -32,7 +32,7 @@ var targets = map[string]target{
 	"dep-agent": {
 		name:       "deployment-agent",
 		binaryName: "dep-agent",
-		buildPkg:   "cgit.dcpri.me/deployment-agent/dep-agent",
+		buildPkg:   "github.com/dtchanpura/deployment-agent/dep-agent",
 		buildDir:   "bin",
 		archiveFiles: []archiveFile{
 			{src: "{{binary}}", dst: "{{binary}}", perm: 0755},

@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"cgit.dcpri.me/deployment-agent/listener"
+	"github.com/dtchanpura/deployment-agent/listener"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

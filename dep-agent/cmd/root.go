@@ -19,7 +19,7 @@ import (
 	"os"
 	"path"
 
-	"cgit.dcpri.me/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/config"
 	"github.com/fsnotify/fsnotify"
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/cobra"
