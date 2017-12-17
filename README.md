@@ -8,7 +8,7 @@ Deployment Agent is a program which allows users to run a script on remote serve
 on webhook call. Program commands allow one to initialize configuration, add a
 new project, list added projects, etc. It also allows to start a HTTP server
 (listener) which will listen indefinitely (until exception occurs) for a webhook
-from a CI server or Github/Bitbucket hooks.
+from a CI server or GitHub/Bitbucket hooks.
 
 ## Getting started
 
