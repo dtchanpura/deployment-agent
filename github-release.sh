@@ -81,7 +81,6 @@ function create_release () {
     title=$(git tag -n10 ${tag_name} | sed 's/^[ ]*//g' | sed "s/${tag_name}[ ]*//" | head -1)
     body=$(git tag -n10 ${tag_name} | sed 's/^[ ]*//g' | sed "s/${tag_name}[ ]*//" | sed 1d)
     data="{\"tag_name\":\"${tag_name}\",\"name\":\"${title}\",\"body\":\"${body//$'\n'/\\n}\"}"
-    curl -XPOST -H "Authorization: token ${github_api_token}" http://localhost:9999 -d"${data}"
     RELEASE_ID=$(curl -XPOST -H "Authorization: token ${github_api_token}" "${API_URL}" -d"${data}" | jq .id)
     echo "Release ID: ${RELEASE_ID}"
 }
