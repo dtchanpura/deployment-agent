@@ -77,6 +77,20 @@ can be provided while adding the project. (Optional)
   be added in pre_hook_args, post_hook_args and error_hook_args options in
   configuration file
 
+After adding a configuration there will be an output containing two things for
+given IP CIDR Network.
+
+1. UUID: for given configuration
+2. Hash: for each IP CIDR for given configuration
+
+> Note: Following is the sample output
+```
+UUID for this project is: 1af4316b-4de3-4ec5-8027-6fb02cb018d1
+Hash to be used for 192.168.1.0/24: Cs03U__-kHs3B_0uqZ05_GLIvXrrP7wUbfq1tJhS8z-0
+```
+
+
+
 ### `list`
 
 This command is for listing down the projects available in configuration file,
@@ -93,8 +107,19 @@ Following are the projects with their UUIDs
 This command starts the HTTP server (listener) for listening to webhook from CI
 server. It can optionally take parameters as follows
 
-* --host: for specifying which host/ip it should listen to
-* --port: for specifying which port it should listen to
+* `--host`: for specifying which host/ip it should listen to
+* `--port`: for specifying which port it should listen to
+
+The server which starts listening is currently having only one route `/reload`
+which can be used for running deployment scripts. Pattern is `http://hostname:8000/reload/<uuid>/<hash>`
+
+Following is the sample cURL for sending request.
+
+```sh
+# URL is formed by http://hostname:8000/reload/<uuid>/<hash>
+curl -i \
+  "http://deployment.example.com/reload/1af4316b-4de3-4ec5-8027-6fb02cb018d1/Cs03U__-kHs3B_0uqZ05_GLIvXrrP7wUbfq1tJhS8z-0"
+```
 
 ### `version`
 
