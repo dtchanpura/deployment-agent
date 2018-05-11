@@ -7,7 +7,7 @@
 TAG=$(git describe --abbrev=0)
 
 function print_usage () {
-    echo "  Usage: $0 -cu -t v1.0.0 -o username -r deployment-agent"
+    echo "  Usage: $0 -c -u -t v1.0.0 -o username -r deployment-agent"
     echo
     echo "  -c    --create-release    for creating a new release for given tag"
     echo "  -u    --upload-artifacts  for uploading the generated artifacts to release"

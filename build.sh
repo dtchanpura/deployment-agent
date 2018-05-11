@@ -16,6 +16,8 @@ build() {
 	go run build.go "$@"
 }
 
+go run build.go clean
+
 for plat in "${minimal[@]}"; do
     echo Building "$plat"
 
