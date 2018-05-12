@@ -14,7 +14,7 @@
 
 package main
 
-import "github.com/dtchanpura/deployment-agent/dep-agent/cmd"
+import "github.com/dtchanpura/deployment-agent/cmd"
 
 func main() {
 	cmd.Execute()
