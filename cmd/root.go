@@ -82,11 +82,11 @@ func initConfig() {
 
 		// Search config in home directory with name ".dep-agent" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".dep-agent")
+		viper.SetConfigName(".deployment-agent")
 		// viper.SetConfigType("yaml")
 		viper.SetDefault("serve.host", "")
 		viper.SetDefault("serve.port", 8000)
-		cfgFile = path.Join(home, ".dep-agent.yaml")
+		cfgFile = path.Join(home, ".deployment-agent.yaml")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match
