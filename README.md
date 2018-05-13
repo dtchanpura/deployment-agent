@@ -14,14 +14,14 @@ from a CI server or GitHub/Bitbucket hooks.
 
 * Download the latest release based on your machine architecture and operating
 system
-* Extract and Copy executable file named `dep-agent` in PATH so it can executed,
+* Extract and Copy executable file named `deployment-agent` in PATH so it can executed,
 e.g. in `/usr/local/bin` or `/usr/bin`
-* Run `dep-agent init` to initialize the configuration file stored in
-`~/.dep-agent.yaml`
-* Add a project by `dep-agent add --name yourproject --ip-cidr 192.168.1.0/24`
+* Run `deployment-agent init` to initialize the configuration file stored in
+`~/.deployment-agent.yaml`
+* Add a project by `deployment-agent add --name yourproject --ip-cidr 192.168.1.0/24`
   - Make a note of this Hash and UUID which will be used to call the webhook
   from other servers
-* List projects by `dep-agent list`
+* List projects by `deployment-agent list`
 
 ## Example
 
