@@ -12,13 +12,15 @@ func webHookHandler(c *gin.Context) {
 	uuid := c.Param("uuid")
 	token := c.Param("token")
 	clientIP := c.ClientIP()
-	response := generateResponse(uuid, token, clientIP)
+	args := c.QueryArray("arg")
+	// fmt.Println(args)
+	response := generateResponse(uuid, token, clientIP, args...)
 	c.Status(response.StatusCode)
 	// c.JSON(response.StatusCode, response)
 	c.JSON(http.StatusOK, response)
 }
 
-func generateResponse(uuid, token, clientIP string) Response {
+func generateResponse(uuid, token, clientIP string, args ...string) Response {
 	response := Response{StatusCode: http.StatusOK, Ok: false, Message: ""}
 	//fmt.Println(reponame, token)
 	// repo := findProject(uuid)
@@ -31,7 +33,7 @@ func generateResponse(uuid, token, clientIP string) Response {
 			fmt.Println(err) // this will never occur as
 		}
 		if !isUpToDate {
-			go executeHooks(repo)
+			go executeHooks(repo, args...)
 			response.Ok = true
 		}
 	} else {

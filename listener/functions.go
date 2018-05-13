@@ -19,7 +19,7 @@ func validateToken(projectUUID, token, clientIP string) bool {
 	return project.ValidateToken(clientIP, token)
 }
 
-func executeHooks(project config.Project) {
+func executeHooks(project config.Project, args ...string) {
 	// Execute PreHook (if any)
 	isSuccess := true
 	if project.PreHook != "" {
@@ -34,6 +34,23 @@ func executeHooks(project config.Project) {
 		if err != nil {
 			fmt.Printf("error occurred: %v\n", err)
 			isSuccess = false
+		}
+	}
+	// Following is the replacement for above code.
+	if len(project.Hooks) > 0 {
+		for _, hook := range project.Hooks {
+			maxArgs := len(args)
+			if hook.MaxArgs != -1 {
+				maxArgs = hook.MaxArgs
+			}
+			if hook.FilePath != "" {
+				// TODO: Change this project.WorkDir
+				// hook.MaxArgs is for limiting number of arguments
+				err := executeScript(project.WorkDir, hook.FilePath, args[:maxArgs]...)
+				if err != nil {
+					fmt.Println(err)
+				}
+			}
 		}
 	}
 	if project.ErrorHook != "" && !isSuccess {
@@ -54,11 +71,11 @@ func executeScript(workDir, filePath string, args ...string) error {
 			fmt.Println(err)
 		}
 		// err := cmd.Run()
-		bts, err := cmd.Output()
+		outputBytes, err := cmd.Output()
 		if err != nil {
 			return err
 		}
-		fmt.Printf("Command Output: %s\n", string(bts[:]))
+		fmt.Printf("Command Output: %s\n", string(outputBytes[:]))
 		return nil
 	}
 	return errors.New(constants.ErrorFileNotExecutable)
