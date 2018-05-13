@@ -25,8 +25,17 @@ type Project struct {
 	ErrorHookArgs []string      `yaml:"error_hook_args,omitempty" json:"error_hook_args,omitempty"`
 	Secret        string        `yaml:"secret" json:"secret"`
 	Tokens        []TokenDetail `yaml:"tokens" json:"tokens"`
+	Hooks         []Hook        `yaml:"hooks,omitempty" json:"hooks,omitempty"`
 	// Following part has been removed as we will be adding all related things in PreHook or PostHook
 	// RemotePath    string        `yaml:"remote_path" json:"remote_path"` // For downloading
+}
+
+// Hook is a new struct for replacing PreHook and PostHook
+type Hook struct {
+	FilePath string `yaml:"file_path" json:"file_path"`                   // path to file to be executed
+	MaxArgs  int    `yaml:"max_args,omitempty" json:"max_args,omitempty"` // For limiting number of arguments
+	// -1 allows all arguments
+	// TODO: Hook specific WorkDir to be added
 }
 
 // TokenDetail is for allowing multiple ips to access same

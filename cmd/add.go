@@ -27,6 +27,7 @@ import (
 
 var (
 	name      string
+	hooks     []string
 	preHook   string
 	postHook  string
 	errorHook string
@@ -45,6 +46,7 @@ var addCmd = &cobra.Command{
 		// // project.Tokens = []Token{}
 		project := config.NewProject(cidr...)
 		project.Name = name
+		project.Hooks = config.NewHooks(hooks...)
 		project.PreHook = preHook
 		project.PostHook = postHook
 		project.ErrorHook = errorHook
@@ -81,6 +83,7 @@ func init() {
 		os.Exit(1)
 	}
 	addCmd.Flags().StringVar(&name, "name", "", "Name of project.")
+	addCmd.Flags().StringArrayVar(&hooks, "hook", []string{}, "Path to script to be executed on webhook call.")
 	addCmd.Flags().StringVar(&preHook, "pre-hook", "", "Path to script to be executed before the event.")
 	addCmd.Flags().StringVar(&postHook, "post-hook", "", "Path to script to be executed after the event.")
 	addCmd.Flags().StringVar(&errorHook, "error-hook", "", "Path to script to be executed in case of error.")
