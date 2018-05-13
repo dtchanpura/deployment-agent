@@ -194,6 +194,11 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 					projectStruct.UUID = value.(string)
 				case "secret":
 					projectStruct.Secret = value.(string)
+				case "hooks":
+					projectStruct.Hooks = []Hook{}
+					for _, v := range value.([]interface{}) {
+						projectStruct.Hooks = append(projectStruct.Hooks, decodeHook(v.(map[interface{}]interface{})))
+					}
 				}
 			}
 
@@ -218,4 +223,28 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 	}
 	StoredProjects = projects
 	// return projects
+}
+
+func decodeHook(h map[interface{}]interface{}) Hook {
+	hook := Hook{}
+	for k, v := range h {
+		switch k {
+		case "file_path":
+			hook.FilePath = v.(string)
+		case "max_args":
+			hook.MaxArgs = v.(int)
+		}
+	}
+	return hook
+}
+
+// NewHooks for getting a new []Hook to be assigned to project.Hooks
+func NewHooks(hooks ...string) []Hook {
+	Hooks := make([]Hook, 0)
+	for _, hook := range hooks {
+		Hooks = append(Hooks, Hook{
+			FilePath: hook,
+		})
+	}
+	return Hooks
 }
