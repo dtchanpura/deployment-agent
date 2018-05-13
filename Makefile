@@ -1,15 +1,18 @@
 PKGS := $(shell go list ./... | grep -v /vendor)
+
 BINARY := deployment-agent
 PLATFORMS := windows linux darwin
+VERSION ?= latest
 os = $(word 1, $@)
 
 .PHONY:	test
-test:
+test: config
 	go test $(PKGS)
 
-.PHONY:	lint
-lint:
-	gometalinter ./... --vendor
+.PHONY: config
+config:
+	go get github.com/golang/dep/cmd/dep
+	dep ensure
 
 .PHONY: $(PLATFORMS)
 $(PLATFORMS):
@@ -21,5 +24,6 @@ $(PLATFORMS):
 .PHONY: release
 release: windows linux darwin
 
+.PHONY: clean
 clean:
 	rm -r release/*
