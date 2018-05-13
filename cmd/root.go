@@ -80,7 +80,7 @@ func initConfig() {
 			os.Exit(1)
 		}
 
-		// Search config in home directory with name ".dep-agent" (without extension).
+		// Search config in home directory with name ".deployment-agent" (without extension).
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".deployment-agent")
 		// viper.SetConfigType("yaml")
