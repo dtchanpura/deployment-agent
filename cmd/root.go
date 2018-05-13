@@ -31,11 +31,11 @@ var watchEnabled bool
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:   "dep-agent",
+	Use:   "deployment-agent",
 	Short: "Deployment agent for simple deployments",
 	Long: `Deployment agent for initializing, adding and modifying configurations.
 
-dep-agent is a cli tool to manage paths, hooks and tokens for accessing
+deployment-agent is a cli tool to manage paths, hooks and tokens for accessing
 deployment resources which can be useful to be called from Jenkins or other CI tools.
 `,
 	// Uncomment the following line if your bare application
@@ -58,7 +58,7 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.dep-agent.yaml)")
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.deployment-agent.yaml)")
 	RootCmd.PersistentFlags().BoolVar(&watchEnabled, "watch-config", false, "Watch config file for changes")
 
 	// Cobra also supports local flags, which will only run
@@ -82,11 +82,11 @@ func initConfig() {
 
 		// Search config in home directory with name ".dep-agent" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".dep-agent")
+		viper.SetConfigName(".deployment-agent")
 		// viper.SetConfigType("yaml")
 		viper.SetDefault("serve.host", "")
 		viper.SetDefault("serve.port", 8000)
-		cfgFile = path.Join(home, ".dep-agent.yaml")
+		cfgFile = path.Join(home, ".deployment-agent.yaml")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

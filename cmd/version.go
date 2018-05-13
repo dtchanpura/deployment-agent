@@ -38,8 +38,8 @@ var versionCmd = &cobra.Command{
 
 func init() {
 	RootCmd.AddCommand(versionCmd)
-	version = "0.3.1"
-	buildDate = "2017-12-17 13:19:50 IST"
+	version = "0.4.0"
+	buildDate = "2018-05-13 12:21:53 IST"
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
