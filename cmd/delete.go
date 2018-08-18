@@ -35,8 +35,12 @@ file and delete the part starting with "- name:"  which is the start of new elem
 }
 
 func init() {
+	var name string
+	var projectUUID string
 	RootCmd.AddCommand(deleteCmd)
 
+	deleteCmd.Flags().StringVar(&name, "name", "", "Name of project.")
+	deleteCmd.Flags().StringVar(&projectUUID, "uuid", "", "UUID of project.")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
