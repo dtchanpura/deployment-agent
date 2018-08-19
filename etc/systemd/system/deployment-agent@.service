@@ -1,0 +1,12 @@
+[Unit]
+Description=Deployment Agent Listener for %I
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/%i
+ExecStart=/usr/local/bin/deployment-agent serve --watch-config
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
