@@ -37,6 +37,9 @@ projects:
   - name: test-project
     uuid: test-uuid
     work_dir: /home/user
+    hooks:
+      - file_path: /home/user/test.sh
+        max_args: 2
     pre_hook: /tmp/download-code.sh
     pre_hook_args:
       - s3://bucket/file
@@ -76,6 +79,8 @@ can be provided while adding the project. (Optional)
   - In case of more arguments needed to be provided for the given hooks it can
   be added in pre_hook_args, post_hook_args and error_hook_args options in
   configuration file
+* --hook: this can be used instead of --pre-hook and --post-hook to add more
+hook scripts
 
 After adding a configuration there will be an output containing two things for
 given IP CIDR Network.
