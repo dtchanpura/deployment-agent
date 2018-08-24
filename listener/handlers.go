@@ -28,12 +28,12 @@ func generateResponse(uuid, token, clientIP string, args ...string) Response {
 	if result {
 		var isUpToDate bool
 		// c.Writer.Write([]byte("Token Valid\n"))
-		repo, err := config.FindProjectWithUUID(uuid)
+		project, err := config.FindProjectWithUUID(uuid)
 		if err != nil {
 			fmt.Println(err) // this will never occur as
 		}
 		if !isUpToDate {
-			go executeHooks(repo, args...)
+			go executeHooks(project, args...)
 			response.Ok = true
 		}
 	} else {
