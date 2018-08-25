@@ -130,6 +130,21 @@ curl -i \
 
 This is for checking version and build date of program
 
+### `regenerate`
 
+This command is used to get the hash generated at the time of adding a new
+projects. It also helps to regenerate the hash if the name was changed from the
+configuration file.
+
+It accepts UUID as parameter so to use it one must list all the projects once
+and then use the UUID for which hash needs to be regenerated.
+
+```sh
+$ deployment-agent regenerate ece419ae-8ee2-44e3-a0d3-589eae79cd27
+0.0.0.0/0 :  Cgcf012PIoTAx9lG93N7qHg_Cg9qYM_g_TMjh690xGDS
+# If the name is changed from configuration file...
+$ deployment-agent regenerate ece419ae-8ee2-44e3-a0d3-589eae79cd27
+0.0.0.0/0 :  CpjqoVOAaXodFJHv_E7s61nveKXBoy0AAXmi_jBTdGoQ
+```
 
 > Note: Most of the code for [build.go]() has been copied from [syncthing/syncthing](https://github.com/syncthing/syncthing)

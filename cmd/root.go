@@ -31,7 +31,9 @@ var watchEnabled bool
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:   "deployment-agent",
+	Use:           "deployment-agent",
+	SilenceErrors: true,
+	// SilenceUsage:  true,
 	Short: "Deployment agent for simple deployments",
 	Long: `Deployment agent for initializing, adding and modifying configurations.
 
@@ -94,12 +96,21 @@ func initConfig() {
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
-		viper.UnmarshalKey("serve", &config.StoredServe)
+		err := viper.UnmarshalKey("serve", &config.StoredServe)
+		if err != nil {
+			fmt.Println("Error Occurred while reading serve key: ", err)
+		}
 		// err := viper.UnmarshalKey("projects", &config.StoredProjects)
-		config.DecodeProjectConfiguration(viper.AllSettings())
+		err = config.DecodeProjectConfiguration(viper.AllSettings())
+		if err != nil {
+			fmt.Println("Error Occurred while decoding project configuration")
+		}
+		// TODO: Condition to be added.
+		// VERBOSE: added following for verbosity.
+		// fmt.Printf("File has %d projects\n", len(config.StoredProjects))
 		// err = viper.Unmarshal(&config.StoredConfiguration)
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println("Error Occurred while reading the configuration file: ", err)
 		}
 		// fmt.Println(config.StoredConfiguration)
 		// viper.Unmarshal(&config.StoredConfiguration)
@@ -114,6 +125,5 @@ func initConfig() {
 			// viper.UnmarshalKey("projects", &config.StoredProjects)
 			config.DecodeProjectConfiguration(viper.AllSettings())
 		})
-
 	}
 }

@@ -165,7 +165,7 @@ func FindProject(name, projectUUID string) (Project, error) {
 }
 
 // DecodeProjectConfiguration for decoding the project configuration from viper.AllSettings()
-func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
+func DecodeProjectConfiguration(settingsMap map[string]interface{}) error {
 	// config.StoredProjects
 	// projects := viper.AllSettings()["projects"].([]interface{})
 
@@ -222,7 +222,7 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) {
 		}
 	}
 	StoredProjects = projects
-	// return projects
+	return nil
 }
 
 func decodeHook(h map[interface{}]interface{}) Hook {
