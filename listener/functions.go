@@ -71,8 +71,9 @@ func executeScript(workDir, filePath string, args ...string) error {
 			fmt.Println(err)
 		}
 		// err := cmd.Run()
-		outputBytes, err := cmd.Output()
+		outputBytes, err := cmd.CombinedOutput()
 		if err != nil {
+			fmt.Printf("Command Error: %s\n", string(outputBytes[:]))
 			return err
 		}
 		fmt.Printf("Command Output: %s\n", string(outputBytes[:]))
