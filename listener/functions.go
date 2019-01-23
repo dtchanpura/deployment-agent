@@ -48,6 +48,7 @@ func executeHooks(project config.Project, args ...string) {
 				// hook.MaxArgs is for limiting number of arguments
 				err := executeScript(project.WorkDir, hook.FilePath, args[:maxArgs]...)
 				if err != nil {
+					isSuccess = false
 					fmt.Println(err)
 				}
 			}
