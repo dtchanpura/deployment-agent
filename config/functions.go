@@ -12,6 +12,7 @@ import (
 	"os"
 
 	"github.com/dtchanpura/deployment-agent/constants"
+	"github.com/dtchanpura/deployment-agent/utils"
 	"github.com/google/uuid"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -247,4 +248,37 @@ func NewHooks(hooks ...string) []Hook {
 		})
 	}
 	return Hooks
+}
+
+// Execution part
+
+// ExecuteHooks for executing hooks one after another
+func (project *Project) ExecuteHooks(args ...string) {
+	isSuccess := true
+	// Following is the replacement for above code.
+	if len(project.Hooks) > 0 {
+		for _, hook := range project.Hooks {
+			maxArgs := len(args)
+			if hook.MaxArgs != -1 {
+				maxArgs = hook.MaxArgs
+			}
+			if hook.FilePath != "" {
+				// TODO: Change this project.WorkDir
+				// hook.MaxArgs is for limiting number of arguments
+				err := utils.ExecuteScript(project.WorkDir, hook.FilePath, args[:maxArgs]...)
+				if err != nil {
+					isSuccess = false
+					fmt.Println(err)
+				}
+			}
+		}
+	}
+	if project.ErrorHook != "" && !isSuccess {
+		fmt.Println("Error occurred in running hook(s)")
+		err := utils.ExecuteScript(project.WorkDir, project.ErrorHook, project.ErrorHookArgs...)
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+
 }
