@@ -9,6 +9,7 @@ import (
 	"github.com/dtchanpura/deployment-agent/constants"
 )
 
+// ExecuteScript for executing script
 func ExecuteScript(workdir string, execpath string, args ...string) error {
 	if fileInfo, err := os.Stat(execpath); !os.IsPermission(err) && !os.IsNotExist(err) && fileInfo.Mode()&0111 != 0 {
 		cmd := exec.Command(execpath, args...)

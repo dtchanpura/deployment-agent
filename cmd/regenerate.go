@@ -20,6 +20,7 @@ import (
 	"os"
 
 	"github.com/dtchanpura/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/constants"
 	"github.com/spf13/cobra"
 )
 
@@ -64,5 +65,5 @@ func regenerate(uuid string) (*config.Project, error) {
 		}
 		return &project, nil
 	}
-	return nil, errors.New("Invalid UUID")
+	return nil, errors.New(constants.ErrorInvalidUUID)
 }
