@@ -2,7 +2,7 @@ package utils
 
 import (
 	"errors"
-	"fmt"
+	"log"
 	"os"
 	"os/exec"
 
@@ -16,15 +16,15 @@ func ExecuteScript(workdir string, execpath string, args ...string) error {
 		if dirInfo, err := os.Stat(workdir); err == nil && dirInfo.IsDir() {
 			cmd.Dir = workdir
 		} else {
-			fmt.Println(err)
+			log.Println(err)
 		}
 		// err := cmd.Run()
 		outputBytes, err := cmd.CombinedOutput()
 		if err != nil {
-			fmt.Printf("Command Error: %s\n", string(outputBytes[:]))
+			log.Printf("Command Error: %s\n", string(outputBytes[:]))
 			return err
 		}
-		fmt.Printf("Command Output: %s\n", string(outputBytes[:]))
+		log.Printf("Command Output: %s\n", string(outputBytes[:]))
 		return nil
 	}
 	return errors.New(constants.ErrorFileNotExecutable)
