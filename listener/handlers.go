@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/dtchanpura/deployment-agent/config"
+	"github.com/dtchanpura/deployment-agent/constants"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,18 @@ func webHookHandler(c *gin.Context) {
 	response := generateResponse(uuid, token, clientIP, syncFlag, args...)
 	c.Status(response.StatusCode)
 	// c.JSON(response.StatusCode, response)
-	c.JSON(http.StatusOK, response)
+	c.JSON(response.StatusCode, response)
+}
+
+func versionHandler(c *gin.Context) {
+	response := Response{
+		StatusCode: http.StatusOK,
+		Ok:         true,
+		Version:    constants.Version,
+		BuildDate:  constants.BuildDate,
+	}
+	c.Status(response.StatusCode)
+	c.JSON(response.StatusCode, response)
 }
 
 func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...string) Response {

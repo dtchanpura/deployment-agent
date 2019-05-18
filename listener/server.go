@@ -13,6 +13,7 @@ func StartListener(host string, port int) {
 	router := gin.New()
 	router.GET("/reload/:uuid/:token", webHookHandler)
 	router.POST("/reload/:uuid/:token", webHookHandler)
+	router.GET("/version", versionHandler)
 	addr := fmt.Sprintf("%s:%v", host, port)
 	log.Println("Server started at", addr)
 	log.Fatalln(router.Run(addr))

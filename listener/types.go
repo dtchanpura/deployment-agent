@@ -6,4 +6,6 @@ type Response struct {
 	Ok         bool        `json:"ok"`
 	Message    string      `json:"message,omitempty"`
 	Data       interface{} `json:"data,omitempty"`
+	Version    string      `json:"version,omitempty"`
+	BuildDate  string      `json:"build_date,omitempty"`
 }

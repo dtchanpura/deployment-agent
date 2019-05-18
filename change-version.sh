@@ -9,7 +9,7 @@ function print_usage () {
 	exit 0
 }
 
-currentVersion=$(grep 'version = ' cmd/version.go | awk -F'"' '{print $2}')
+currentVersion=$(grep 'Version = ' constants/strings.go | awk -F'"' '{print $2}')
 
 if [[ $# -eq 0 ]]; then
     print_usage
@@ -32,9 +32,9 @@ do
 done
 
 function updateVersion() {
-	sed -i.bak "s/version = \".*\"/version = \"${VERSION}\"/g" cmd/version.go
-	sed -i.bak "s/buildDate = \".*\"/buildDate = \"$(date +"%Y-%m-%d %H:%M:%S %Z")\"/g" cmd/version.go
-	rm cmd/version.go.bak
+	sed -i.bak "s/Version = \".*\"/Version = \"${VERSION}\"/g" constants/strings.go
+	sed -i.bak "s/BuildDate = \".*\"/BuildDate = \"$(date +"%Y-%m-%d %H:%M:%S %Z")\"/g" constants/strings.go
+	rm  constants/strings.go.bak
 }
 
 if [ "X"$VERSION != "X" ]; then

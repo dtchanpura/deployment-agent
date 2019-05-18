@@ -8,3 +8,9 @@ var SecretConstants = []string{
 	"QWERTYUIOPASDFGHJKLZXCVBNM", // ^^ include all upper case alphabets (still weak)
 	"~!@#$%^&*()",                // include some symbols (seems strong)
 }
+
+// Version string to store the command version
+var Version = "v0.8.0-alpha"
+
+// BuildDate string to store the built date
+var BuildDate = "2019-05-18 13:11:28 IST"
