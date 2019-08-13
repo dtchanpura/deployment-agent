@@ -10,7 +10,7 @@ var SecretConstants = []string{
 }
 
 // Version string to store the command version
-var Version = "v0.8.0"
+var Version = "v0.8.1-alpha"
 
 // BuildDate string to store the built date
-var BuildDate = "2019-08-13 16:02:08 IST"
+var BuildDate = "2019-08-13 16:03:08 IST"
