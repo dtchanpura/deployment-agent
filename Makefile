@@ -12,7 +12,7 @@ bootstrap:
 	go get -u honnef.co/go/tools/cmd/staticcheck # Badass static analyzer/linter
 	# go get honnef.co/go/tools/cmd/megacheck    # Badass static analyzer/linter
 	go get -u github.com/fzipp/gocyclo           # Cyclomatic complexity check
-	dep ensure
+	go mod download
 
 test:
 	go test -v -race $(PKGS)        # Normal Test
