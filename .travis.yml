@@ -1,6 +1,6 @@
 language: go
 go:
-    - "1.x"
+    - "1.11.x"
 
 install: true
 
@@ -9,11 +9,11 @@ notifications:
     email:          false
 
 before_script:
-    - make bootstrap
+    - GO111MODULE=on make bootstrap
     - GO_FILES=$(find . -iname '*.go' -type f | grep -v /vendor/) # All the .go files, excluding vendor/
 
 script:
-    - make test
+    - GO111MODULE=on make test
     # - test -z $(gofmt -s -l $GO_FILES)         # Fail if a .go file hasn't been formatted with gofmt
     # - go vet ./...                             # go vet is the official Go static analyzer
     # - megacheck ./...                          # "go vet on steroids" + linter
@@ -21,7 +21,7 @@ script:
     # - golint -set_exit_status $(go list ./...) # one last linter
 
 before_deploy:
-    - make VERSION=${TRAVIS_TAG} clean release -j2
+    - GO111MODULE=on make VERSION=${TRAVIS_TAG} clean release -j2
 
 deploy:
     provider: releases

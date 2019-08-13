@@ -7,7 +7,6 @@ VERSION ?= latest
 os = $(word 1, $@)
 
 bootstrap:
-	go get -u github.com/golang/dep/cmd/dep      # Dependency management tool
 	go get -u golang.org/x/lint/golint           # Linter
 	go get -u honnef.co/go/tools/cmd/staticcheck # Badass static analyzer/linter
 	# go get honnef.co/go/tools/cmd/megacheck    # Badass static analyzer/linter
