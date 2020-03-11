@@ -17,15 +17,15 @@ func ExecuteScript(workdir string, execpath string, args ...string) error {
 		if dirInfo, err := os.Stat(workdir); err == nil && dirInfo.IsDir() {
 			cmd.Dir = workdir
 		} else {
-			logWithTimestampln(err.Error())
+			log.Println(err.Error())
 		}
 		// err := cmd.Run()
 		outputBytes, err := cmd.CombinedOutput()
 		if err != nil {
-			logWithTimestampf("Command Error: %s\n", string(outputBytes[:]))
+			log.Printf("Command Error: %s\n", string(outputBytes[:]))
 			return err
 		}
-		logWithTimestampf("Command Output: %s\n", string(outputBytes[:]))
+		log.Printf("Command Output: %s\n", string(outputBytes[:]))
 		return nil
 	}
 	return errors.New(constants.ErrorFileNotExecutable)
