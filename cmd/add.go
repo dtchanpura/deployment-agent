@@ -84,7 +84,7 @@ func init() {
 		os.Exit(1)
 	}
 	addCmd.Flags().StringVar(&name, "name", "", "Name of project.")
-	addCmd.Flags().IntVar(&maxargs, "max-args", 0, "Max Arguments overall for the project.")
+	addCmd.Flags().IntVar(&maxargs, "max-args", 0, "Maximum arguments limit for each of the hooks in the project.")
 	addCmd.Flags().StringArrayVar(&hooks, "hook", []string{}, "Path to script to be executed on webhook call.")
 	addCmd.Flags().StringVar(&preHook, "pre-hook", "", "Path to script to be executed before the event.")
 	addCmd.Flags().StringVar(&postHook, "post-hook", "", "Path to script to be executed after the event.")
