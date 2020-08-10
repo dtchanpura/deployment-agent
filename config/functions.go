@@ -195,6 +195,8 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) error {
 					projectStruct.UUID = value.(string)
 				case "secret":
 					projectStruct.Secret = value.(string)
+				case "max_args":
+					projectStruct.MaxArgs = value.(int)
 				case "hooks":
 					projectStruct.Hooks = []Hook{}
 					for _, v := range value.([]interface{}) {
@@ -258,9 +260,13 @@ func (project *Project) ExecuteHooks(args ...string) {
 	// Following is the replacement for above code.
 	if len(project.Hooks) > 0 {
 		for _, hook := range project.Hooks {
+			allowedMaxArgs := project.MaxArgs
+			if hook.MaxArgs != 0 {
+				allowedMaxArgs = hook.MaxArgs
+			}
 			maxArgs := len(args)
-			if hook.MaxArgs != -1 {
-				maxArgs = hook.MaxArgs
+			if allowedMaxArgs != -1 {
+				maxArgs = allowedMaxArgs
 			}
 			if hook.FilePath != "" {
 				// TODO: Change this project.WorkDir
