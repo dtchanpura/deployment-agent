@@ -36,12 +36,16 @@ func executeHooks(project config.Project, args ...string) {
 	// Following is the replacement for above code.
 	if len(project.Hooks) > 0 {
 		for _, hook := range project.Hooks {
+			allowedMaxArgs := project.MaxArgs
+			if hook.MaxArgs != 0 {
+				allowedMaxArgs = hook.MaxArgs
+			}
 			maxArgs := len(args)
-			if hook.MaxArgs != -1 && maxArgs >= hook.MaxArgs {
-				maxArgs = hook.MaxArgs
+			if allowedMaxArgs != -1 && maxArgs >= allowedMaxArgs {
+				maxArgs = allowedMaxArgs
 			}
 			if hook.FilePath != "" {
-				// hook.MaxArgs is for limiting number of arguments
+				// maxArgs is for limiting number of arguments
 				err := utils.ExecuteScript(project.WorkDir, hook.FilePath, args[:maxArgs]...)
 				if err != nil {
 					isSuccess = false

@@ -26,6 +26,7 @@ type Project struct {
 	Secret        string        `yaml:"secret" json:"secret"`
 	Tokens        []TokenDetail `yaml:"tokens" json:"tokens"`
 	Hooks         []Hook        `yaml:"hooks,omitempty" json:"hooks,omitempty"`
+	MaxArgs       int           `yaml:"max_args,omitempty" json:"max_args,omitempty"`
 	// Following part has been removed as we will be adding all related things in PreHook or PostHook
 	// RemotePath    string        `yaml:"remote_path" json:"remote_path"` // For downloading
 }
