@@ -1,12 +1,12 @@
 language: go
 go:
-    - "1.11.x"
+    - "1.x"
 
 install: true
 
 # Don't email me the results of the test runs.
 notifications:
-    email:          false
+    email: false
 
 before_script:
     - GO111MODULE=on make bootstrap
@@ -14,11 +14,6 @@ before_script:
 
 script:
     - GO111MODULE=on make test
-    # - test -z $(gofmt -s -l $GO_FILES)         # Fail if a .go file hasn't been formatted with gofmt
-    # - go vet ./...                             # go vet is the official Go static analyzer
-    # - megacheck ./...                          # "go vet on steroids" + linter
-    # - gocyclo -over 19 $GO_FILES               # forbid code with huge functions
-    # - golint -set_exit_status $(go list ./...) # one last linter
 
 before_deploy:
     - GO111MODULE=on make VERSION=${TRAVIS_TAG} clean release -j2
