@@ -2,37 +2,43 @@ package listener
 
 import (
 	"fmt"
+	"net"
 	"net/http"
-	"strings"
+	"strconv"
 
 	"github.com/dtchanpura/deployment-agent/config"
 	"github.com/dtchanpura/deployment-agent/constants"
-	"github.com/gin-gonic/gin"
 )
 
-func webHookHandler(c *gin.Context) {
-	uuid := c.Param("uuid")
-	token := c.Param("token")
-	clientIP := c.ClientIP()
-	args := c.QueryArray("arg")
-	syncFlag := strings.EqualFold(c.Query("sync"), "true")
+func webHookHandler(w http.ResponseWriter, r *http.Request) {
+	uuid, token, err := getCredentials(r.URL.Path)
+	if err != nil {
+		errorHandler(err, http.StatusBadRequest, w)
+		return
+	}
+	clientIP := getIP(r)
+	args := r.URL.Query()["arg"]
+	syncFlag := false
+	if s := r.URL.Query().Get("sync"); s != "" {
+		syncFlag, err = strconv.ParseBool(s)
+		if err != nil {
+			errorHandler(err, http.StatusBadRequest, w)
+			return
+		}
+	}
 
 	// fmt.Println(args)
 	response := generateResponse(uuid, token, clientIP, syncFlag, args...)
-	c.Status(response.StatusCode)
-	// c.JSON(response.StatusCode, response)
-	c.JSON(response.StatusCode, response)
+	response.write(w)
 }
-
-func versionHandler(c *gin.Context) {
+func versionHandler(w http.ResponseWriter, r *http.Request) {
 	response := Response{
 		StatusCode: http.StatusOK,
 		Ok:         true,
 		Version:    constants.Version,
-		BuildDate:  constants.BuildDate,
+		BuildDate:  constants.BuildDate(),
 	}
-	c.Status(response.StatusCode)
-	c.JSON(response.StatusCode, response)
+	response.write(w)
 }
 
 func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...string) Response {
@@ -59,4 +65,26 @@ func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...strin
 		response.Ok = false
 	}
 	return response
+}
+
+func getIP(r *http.Request) string {
+	if realip := r.Header.Get("X-Real-Ip"); realip != "" {
+		return realip
+	}
+	if forwardedip := r.Header.Get("X-Forwarded-For"); forwardedip != "" {
+		return forwardedip
+	}
+	if host, _, err := net.SplitHostPort(r.RemoteAddr); err == nil {
+		return host
+	}
+	return ""
+}
+
+func errorHandler(err error, statusCode int, w http.ResponseWriter) {
+	r := Response{
+		Ok:         false,
+		StatusCode: statusCode,
+		Message:    err.Error(),
+	}
+	r.write(w)
 }

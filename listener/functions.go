@@ -2,10 +2,29 @@ package listener
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/dtchanpura/deployment-agent/config"
 	"github.com/dtchanpura/deployment-agent/utils"
 )
+
+const (
+	errURLNotValid         = "invalid url: %s"
+	errCredentialsNotValid = "invalid credentials: %s"
+)
+
+func getCredentials(path string) (string, string, error) {
+	if !strings.HasPrefix(path, "/reload/") {
+		// Not possible, as it is called from the handler having /reload/
+		return "", "", fmt.Errorf(errURLNotValid, path)
+	}
+	path = strings.TrimPrefix(path, "/reload/")
+	paths := strings.Split(path, "/")
+	if len(paths) != 2 {
+		return "", "", fmt.Errorf(errCredentialsNotValid, path)
+	}
+	return paths[0], paths[1], nil
+}
 
 func validateToken(projectUUID, token, clientIP string) bool {
 	project, err := config.FindProjectWithUUID(projectUUID)
