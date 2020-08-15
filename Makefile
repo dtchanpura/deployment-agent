@@ -1,9 +1,11 @@
 PKGS := $(shell go list ./... | grep -v /vendor)
 GO_FILES := $(shell find . -iname '*.go' -type f | grep -v /vendor/) # All the .go files, excluding vendor/
+BUILD_DATE := $(shell date --iso-8601=seconds)
+VERSION ?= latest
 
+LDFLAGS := -s -w -X github.com/dtchanpura/deployment-agent/constants.Version=$(VERSION) -X github.com/dtchanpura/deployment-agent/constants.BuildDateStr=$(BUILD_DATE)
 BINARY := deployment-agent
 PLATFORMS := windows linux darwin
-VERSION ?= latest
 os = $(word 1, $@)
 
 bootstrap:
@@ -23,7 +25,7 @@ test:
 
 $(PLATFORMS):
 	mkdir -p release
-	GOOS=$(os) GOARCH=amd64 go build -o release/$(BINARY)-$(VERSION)-$(os)-amd64
+	GOOS=$(os) GOARCH=amd64 go build -o release/$(BINARY)-$(VERSION)-$(os)-amd64 -ldflags="$(LDFLAGS)"
 	tar -czvf release/$(BINARY)-$(VERSION)-$(os)-amd64.tar.gz README.md -C release/ $(BINARY)-$(VERSION)-$(os)-amd64
 
 .PHONY: release

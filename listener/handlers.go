@@ -36,7 +36,7 @@ func versionHandler(w http.ResponseWriter, r *http.Request) {
 		StatusCode: http.StatusOK,
 		Ok:         true,
 		Version:    constants.Version,
-		BuildDate:  constants.BuildDate,
+		BuildDate:  constants.BuildDate(),
 	}
 	response.write(w)
 }

@@ -1,5 +1,7 @@
 package constants
 
+import "time"
+
 // SecretConstants are constants which will be used for generating random string
 var SecretConstants = []string{
 	"01234567",                   // include Octals (weakest)
@@ -10,7 +12,15 @@ var SecretConstants = []string{
 }
 
 // Version string to store the command version
-var Version = "v0.8.1-alpha"
+var Version = ""
 
-// BuildDate string to store the built date
-var BuildDate = "2019-08-13 16:03:08 IST"
+// BuildDateStr string to store the built date
+var BuildDateStr = ""
+
+// BuildDate function to format date properly
+func BuildDate() string {
+	if d, err := time.Parse(time.RFC3339, BuildDateStr); err == nil {
+		return d.String()
+	}
+	return BuildDateStr
+}
