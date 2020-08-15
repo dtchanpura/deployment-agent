@@ -3,18 +3,15 @@ package listener
 import (
 	"fmt"
 	"log"
-
-	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 // StartListener for starting the gin server on given host:port
 func StartListener(host string, port int) {
-	gin.SetMode(gin.ReleaseMode)
-	router := gin.New()
-	router.GET("/reload/:uuid/:token", webHookHandler)
-	router.POST("/reload/:uuid/:token", webHookHandler)
-	router.GET("/version", versionHandler)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/reload/:uuid/:token", webHookHandler)
+	mux.HandleFunc("/version", versionHandler)
 	addr := fmt.Sprintf("%s:%v", host, port)
 	log.Println("Server started at", addr)
-	log.Fatalln(router.Run(addr))
+	log.Fatalln(http.ListenAndServe(addr, mux))
 }

@@ -3,36 +3,31 @@ package listener
 import (
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/dtchanpura/deployment-agent/config"
 	"github.com/dtchanpura/deployment-agent/constants"
-	"github.com/gin-gonic/gin"
 )
 
-func webHookHandler(c *gin.Context) {
-	uuid := c.Param("uuid")
-	token := c.Param("token")
-	clientIP := c.ClientIP()
-	args := c.QueryArray("arg")
-	syncFlag := strings.EqualFold(c.Query("sync"), "true")
+func webHookHandler(w http.ResponseWriter, r *http.Request) {
+
+	uuid := ""
+	token := ""
+	clientIP := ""
+	args := []string{""}
+	syncFlag := false
 
 	// fmt.Println(args)
 	response := generateResponse(uuid, token, clientIP, syncFlag, args...)
-	c.Status(response.StatusCode)
-	// c.JSON(response.StatusCode, response)
-	c.JSON(response.StatusCode, response)
+	response.write(w)
 }
-
-func versionHandler(c *gin.Context) {
+func versionHandler(w http.ResponseWriter, r *http.Request) {
 	response := Response{
 		StatusCode: http.StatusOK,
 		Ok:         true,
 		Version:    constants.Version,
 		BuildDate:  constants.BuildDate,
 	}
-	c.Status(response.StatusCode)
-	c.JSON(response.StatusCode, response)
+	response.write(w)
 }
 
 func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...string) Response {
