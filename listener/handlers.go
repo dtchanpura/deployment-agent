@@ -18,11 +18,15 @@ func webHookHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	clientIP := getIP(r)
 	args := r.URL.Query()["arg"]
-	syncFlag, err := strconv.ParseBool(r.URL.Query().Get("sync"))
-	if err != nil {
-		errorHandler(err, http.StatusBadRequest, w)
-		return
+	syncFlag := false
+	if s := r.URL.Query().Get("sync"); s != "" {
+		syncFlag, err = strconv.ParseBool(s)
+		if err != nil {
+			errorHandler(err, http.StatusBadRequest, w)
+			return
+		}
 	}
+
 	// fmt.Println(args)
 	response := generateResponse(uuid, token, clientIP, syncFlag, args...)
 	response.write(w)
