@@ -45,12 +45,13 @@ func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...strin
 	//fmt.Println(reponame, token)
 	// repo := findProject(uuid)
 	result := validateToken(uuid, token, clientIP)
-	logger.Debug().Fields(map[string]interface{}{"uuid": uuid, "token": token, "ip": clientIP, "valid": result}).Send()
+	l := logger.Debug().Fields(map[string]interface{}{"uuid": uuid, "token": token, "ip": clientIP, "valid": result})
 	if result {
 		project, err := config.FindProjectWithUUID(uuid)
 		if err != nil {
 			logger.Error().Err(err).Send() // this will never occur as
 		}
+		l.Str("name", project.Name).Send()
 		if !syncFlag {
 			go executeHooks(project, args...)
 		} else {
@@ -58,11 +59,13 @@ func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...strin
 			response.Message = "execution completed"
 		}
 		response.Ok = true
-	} else {
-		response.StatusCode = http.StatusUnauthorized
-		response.Message = "Unauthorized"
-		response.Ok = false
+		return response
 	}
+
+	l.Send()
+	response.StatusCode = http.StatusUnauthorized
+	response.Message = "Unauthorized"
+	response.Ok = false
 	return response
 }
 

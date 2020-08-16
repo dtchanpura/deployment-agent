@@ -5,18 +5,19 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog"
 
 	"github.com/dtchanpura/deployment-agent/constants"
 )
 
 var (
-	logger = log.Logger
+	logger = zerolog.New(os.Stdout)
 )
 
 // ExecuteScript for executing script
 func ExecuteScript(workdir string, execpath string, args ...string) error {
 	if fileInfo, err := os.Stat(execpath); !os.IsPermission(err) && !os.IsNotExist(err) && fileInfo.Mode()&0111 != 0 {
+		logger.Debug().Fields(map[string]interface{}{"workdir": workdir, "script": execpath, "args": args}).Send()
 		cmd := exec.Command(execpath, args...)
 		if dirInfo, err := os.Stat(workdir); err == nil && dirInfo.IsDir() {
 			cmd.Dir = workdir
