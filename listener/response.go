@@ -23,6 +23,7 @@ func (r *Response) write(w http.ResponseWriter) {
 	}
 	e := json.NewEncoder(w)
 	if err := e.Encode(r); err != nil {
+		logger.Error().Err(err).Send()
 		fmt.Fprintf(w, `{"message":"%s", "ok":false"}`, err.Error())
 	}
 }

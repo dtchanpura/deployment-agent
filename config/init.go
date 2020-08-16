@@ -5,13 +5,18 @@ import (
 	"os"
 
 	"github.com/dtchanpura/deployment-agent/constants"
+	"github.com/rs/zerolog"
 )
 
-// StoredProjects Contains the latest stored projects
-var StoredProjects []Project
+var (
+	// StoredProjects Contains the latest stored projects
+	StoredProjects []Project
 
-// StoredServe Contains the latest stored serve details
-var StoredServe Serve
+	// StoredServe Contains the latest stored serve details
+	StoredServe Serve
+
+	logger = zerolog.New(os.Stdout)
+)
 
 // var StoredConfiguration Configuration
 

@@ -133,10 +133,10 @@ func NewToken(whitelistCIDR string) TokenDetail {
 
 // TokenDetail function
 func (tokenDetail *TokenDetail) containsIP(clientIP string) bool {
-	fmt.Println(tokenDetail.WhitelistedNetwork)
+	// fmt.Println(tokenDetail.WhitelistedNetwork)
 	_, ipNet, err := net.ParseCIDR(tokenDetail.WhitelistedNetwork)
 	if err != nil {
-		fmt.Println(err)
+		logger.Error().Err(err).Send()
 		return false
 	}
 	ipAddress := net.ParseIP(clientIP)

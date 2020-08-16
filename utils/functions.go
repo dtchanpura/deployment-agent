@@ -2,12 +2,16 @@ package utils
 
 import (
 	"errors"
-	"log"
 	"os"
 	"os/exec"
-	"time"
+
+	"github.com/rs/zerolog/log"
 
 	"github.com/dtchanpura/deployment-agent/constants"
+)
+
+var (
+	logger = log.Logger
 )
 
 // ExecuteScript for executing script
@@ -17,24 +21,16 @@ func ExecuteScript(workdir string, execpath string, args ...string) error {
 		if dirInfo, err := os.Stat(workdir); err == nil && dirInfo.IsDir() {
 			cmd.Dir = workdir
 		} else {
-			log.Println(err.Error())
+			logger.Error().Err(err).Send()
 		}
 		// err := cmd.Run()
 		outputBytes, err := cmd.CombinedOutput()
 		if err != nil {
-			log.Printf("Command Error: %s\n", string(outputBytes[:]))
+			logger.Error().Str("output", string(outputBytes[:])).Msg("Command Error")
 			return err
 		}
-		log.Printf("Command Output: %s\n", string(outputBytes[:]))
+		logger.Info().Str("output", string(outputBytes[:])).Msg("Command Output")
 		return nil
 	}
 	return errors.New(constants.ErrorFileNotExecutable)
-}
-
-func logWithTimestampf(message string, args ...interface{}) {
-	log.Printf(time.Now().Format("[ 2006/01/02 15:04:05 ] ")+message, args...)
-}
-
-func logWithTimestampln(message string) {
-	logWithTimestampf(message + "\n")
 }

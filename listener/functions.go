@@ -29,7 +29,7 @@ func getCredentials(path string) (string, string, error) {
 func validateToken(projectUUID, token, clientIP string) bool {
 	project, err := config.FindProjectWithUUID(projectUUID)
 	if err != nil {
-		// fmt.Println(err)
+		logger.Error().Err(err).Send()
 		return false
 	}
 	return project.ValidateToken(clientIP, token)
@@ -41,14 +41,14 @@ func executeHooks(project config.Project, args ...string) {
 	if project.PreHook != "" {
 		err := utils.ExecuteScript(project.WorkDir, project.PreHook, project.PreHookArgs...)
 		if err != nil {
-			fmt.Printf("error occurred: %v\n", err)
+			logger.Error().Err(err).Send()
 			isSuccess = false
 		}
 	}
 	if project.PostHook != "" {
 		err := utils.ExecuteScript(project.WorkDir, project.PostHook, project.PostHookArgs...)
 		if err != nil {
-			fmt.Printf("error occurred: %v\n", err)
+			logger.Error().Err(err).Send()
 			isSuccess = false
 		}
 	}
@@ -68,7 +68,7 @@ func executeHooks(project config.Project, args ...string) {
 				err := utils.ExecuteScript(project.WorkDir, hook.FilePath, args[:maxArgs]...)
 				if err != nil {
 					isSuccess = false
-					fmt.Println(err)
+					logger.Error().Err(err).Send()
 				}
 			}
 		}
@@ -77,7 +77,7 @@ func executeHooks(project config.Project, args ...string) {
 		fmt.Println("Error occurred in running prehook and/or posthook")
 		err := utils.ExecuteScript(project.WorkDir, project.ErrorHook, project.ErrorHookArgs...)
 		if err != nil {
-			fmt.Println(err)
+			logger.Error().Err(err).Send()
 		}
 	}
 }

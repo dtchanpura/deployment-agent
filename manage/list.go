@@ -1,15 +1,15 @@
 package manage
 
 import (
-	"bytes"
 	"fmt"
+	"strings"
 
 	"github.com/dtchanpura/deployment-agent/config"
 )
 
 // ListProjects for listing the projects
 func ListProjects(projects []config.Project) string {
-	b := new(bytes.Buffer)
+	b := &strings.Builder{}
 	if len(projects) > 0 {
 		fmt.Fprintln(b, "Following are the projects with their UUIDs")
 		for index, project := range projects {

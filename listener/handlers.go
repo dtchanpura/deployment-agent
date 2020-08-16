@@ -1,7 +1,6 @@
 package listener
 
 import (
-	"fmt"
 	"net"
 	"net/http"
 	"strconv"
@@ -46,11 +45,11 @@ func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...strin
 	//fmt.Println(reponame, token)
 	// repo := findProject(uuid)
 	result := validateToken(uuid, token, clientIP)
+	logger.Debug().Fields(map[string]interface{}{"uuid": uuid, "token": token, "ip": clientIP, "valid": result}).Send()
 	if result {
-		// c.Writer.Write([]byte("Token Valid\n"))
 		project, err := config.FindProjectWithUUID(uuid)
 		if err != nil {
-			fmt.Println(err) // this will never occur as
+			logger.Error().Err(err).Send() // this will never occur as
 		}
 		if !syncFlag {
 			go executeHooks(project, args...)
@@ -86,5 +85,6 @@ func errorHandler(err error, statusCode int, w http.ResponseWriter) {
 		StatusCode: statusCode,
 		Message:    err.Error(),
 	}
+	logger.Error().Err(err).Send()
 	r.write(w)
 }

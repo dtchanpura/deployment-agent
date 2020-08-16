@@ -2,8 +2,14 @@ package listener
 
 import (
 	"fmt"
-	"log"
 	"net/http"
+	"os"
+
+	"github.com/rs/zerolog"
+)
+
+var (
+	logger = zerolog.New(os.Stdout)
 )
 
 // StartListener for starting the gin server on given host:port
@@ -12,6 +18,9 @@ func StartListener(host string, port int) {
 	mux.HandleFunc("/reload/", webHookHandler)
 	mux.HandleFunc("/version", versionHandler)
 	addr := fmt.Sprintf("%s:%v", host, port)
-	log.Println("Server started at", addr)
-	log.Fatalln(http.ListenAndServe(addr, mux))
+	logger.Info().Msgf("Server started at %s", addr)
+	err := http.ListenAndServe(addr, mux)
+	if err != nil {
+		logger.Fatal().Err(err).Send()
+	}
 }

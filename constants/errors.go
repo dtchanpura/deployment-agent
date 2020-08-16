@@ -3,8 +3,8 @@ package constants
 const (
 	// ErrorFileExists if file already exists and overwrite flag is off.
 	ErrorFileExists = "file already exists"
-	// ErrorFileNotExecutable if file is not executable.
-	ErrorFileNotExecutable = "file is not executable"
+	// ErrorFileNotExecutable if file is not executable or doesn't exist.
+	ErrorFileNotExecutable = "file is not executable or does not exist"
 	// ErrorNoProjectFound if project is not found.
 	ErrorNoProjectFound = "project not found"
 	// ErrorProjectAlreadyExists Error if project with same UUID already exists
