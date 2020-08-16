@@ -147,4 +147,6 @@ $ deployment-agent regenerate ece419ae-8ee2-44e3-a0d3-589eae79cd27
 0.0.0.0/0 :  CpjqoVOAaXodFJHv_E7s61nveKXBoy0AAXmi_jBTdGoQ
 ```
 
-> Note: Most of the code for [build.go]() has been copied from [syncthing/syncthing](https://github.com/syncthing/syncthing)
+# LICENSE
+
+MIT
