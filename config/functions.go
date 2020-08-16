@@ -39,20 +39,19 @@ func UpdateConfiguration(cfgFile string, configuration Configuration, overwrite 
 func UpdateProject(cfgFile string, project Project) error {
 	_, err := FindProject(project.Name, project.UUID)
 	if err != nil && err.Error() == constants.ErrorNoProjectFound {
-		updateProjects(cfgFile, project)
 		// fmt.Println(err)
-		return nil
+		return updateProjects(cfgFile, project)
 	}
 	return errors.New(constants.ErrorProjectAlreadyExists)
 }
 
-func updateProjects(cfgFile string, projects ...Project) {
+func updateProjects(cfgFile string, projects ...Project) error {
 	StoredProjects = append(StoredProjects, projects...)
 	configuration := Configuration{
 		ServeConfig:    StoredServe,
 		ProjectConfigs: StoredProjects,
 	}
-	UpdateConfiguration(cfgFile, configuration, true)
+	return UpdateConfiguration(cfgFile, configuration, true)
 }
 
 func generateHash(input string) string {

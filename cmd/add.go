@@ -15,6 +15,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/dtchanpura/deployment-agent/config"
@@ -54,12 +55,12 @@ var addCmd = &cobra.Command{
 		project.WorkDir = workDir
 		// bts, _ := yaml.Marshal(project)
 		if err := project.ValidateProjectConfiguration(); err.Error() == constants.ErrorInvalidConfiguration {
-			// fmt.Println(err)
+			fmt.Println(err)
 			os.Exit(1)
 		}
 		err := manage.AddProject(cfgFile, project)
 		if err != nil {
-			// fmt.Println(err)
+			fmt.Println(err)
 			os.Exit(1)
 		}
 		// fmt.Println(string(bts[:]))
