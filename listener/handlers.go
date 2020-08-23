@@ -30,6 +30,7 @@ func webHookHandler(w http.ResponseWriter, r *http.Request) {
 	response := generateResponse(uuid, token, clientIP, syncFlag, args...)
 	response.write(w)
 }
+
 func versionHandler(w http.ResponseWriter, r *http.Request) {
 	response := Response{
 		StatusCode: http.StatusOK,
@@ -50,22 +51,24 @@ func generateResponse(uuid, token, clientIP string, syncFlag bool, args ...strin
 		project, err := config.FindProjectWithUUID(uuid)
 		if err != nil {
 			logger.Error().Err(err).Send() // this will never occur as
+			return response
 		}
-		l.Str("name", project.Name).Send()
 		if !syncFlag {
 			go executeHooks(project, args...)
 		} else {
 			executeHooks(project, args...)
 			response.Message = "execution completed"
 		}
+		dateVec.WithLabelValues(project.Name, uuid, clientIP, response.Message).SetToCurrentTime()
+		l.Str("name", project.Name).Msg(response.Message)
 		response.Ok = true
 		return response
 	}
 
-	l.Send()
 	response.StatusCode = http.StatusUnauthorized
 	response.Message = "Unauthorized"
 	response.Ok = false
+	l.Msg(response.Message)
 	return response
 }
 

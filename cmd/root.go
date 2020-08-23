@@ -8,12 +8,16 @@ import (
 	"github.com/dtchanpura/deployment-agent/config"
 	"github.com/fsnotify/fsnotify"
 	homedir "github.com/mitchellh/go-homedir"
+	"github.com/rs/zerolog"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
-var watchEnabled bool
+var (
+	cfgFile      string
+	watchEnabled bool
+	logger       = zerolog.New(os.Stdout)
+)
 
 // RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
@@ -106,7 +110,7 @@ func initConfig() {
 		// Watch part
 		viper.WatchConfig()
 		viper.OnConfigChange(func(e fsnotify.Event) {
-			fmt.Println("Config file changed:", e.Name)
+			logger.Info().Msgf("Config file changed: %s", e.Name)
 			viper.UnmarshalKey("serve", &config.StoredServe)
 			// viper.UnmarshalKey("projects", &config.StoredProjects)
 			config.DecodeProjectConfiguration(viper.AllSettings())
