@@ -1,0 +1,18 @@
+name: "deployment-agent"
+arch: "amd64"
+platform: "linux"
+version: "v1.0.0"
+section: "default"
+priority: "extra"
+provides:
+- heartbeet
+maintainer: "Darshil Chanpura <dtchanpura@protonmail.com>"
+description: |
+  Deployment Agent is a program which allows users to run a script on remote server on webhook call.
+vendor: "dcpri.me"
+license: "MIT"
+files:
+  ./release/deployment-agent: "/usr/local/bin/deployment-agent"
+deb:
+  signature:
+    key_file: keys/key.gpg
