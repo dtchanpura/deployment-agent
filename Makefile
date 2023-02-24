@@ -9,10 +9,10 @@ PLATFORMS := windows linux darwin
 os = $(word 1, $@)
 
 bootstrap:
-	go get -u golang.org/x/lint/golint           # Linter
-	go get -u honnef.co/go/tools/cmd/staticcheck # Badass static analyzer/linter
-	# go get honnef.co/go/tools/cmd/megacheck    # Badass static analyzer/linter
-	go get -u github.com/fzipp/gocyclo           # Cyclomatic complexity check
+	go install golang.org/x/lint/golint@latest           # Linter
+	go install honnef.co/go/tools/cmd/staticcheck@latest # Badass static analyzer/linter
+	# go install honnef.co/go/tools/cmd/megacheck@latest   # Badass static analyzer/linter
+	go install github.com/fzipp/gocyclo/cmd/gocyclo@latest # Cyclomatic complexity check
 	go mod download
 
 test:
@@ -27,6 +27,8 @@ $(PLATFORMS):
 	mkdir -p release
 	GOOS=$(os) GOARCH=amd64 go build -o release/$(BINARY) -ldflags="$(LDFLAGS)"
 	tar -czvf release/$(BINARY)-$(VERSION)-$(os)-amd64.tar.gz README.md -C release/ $(BINARY)
+	GOOS=$(os) GOARCH=arm64 go build -o release/$(BINARY) -ldflags="$(LDFLAGS)"
+	tar -czvf release/$(BINARY)-$(VERSION)-$(os)-arm64.tar.gz README.md -C release/ $(BINARY)
 
 .PHONY: release
 release: windows linux darwin
