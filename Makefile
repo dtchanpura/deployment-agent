@@ -25,9 +25,9 @@ test:
 
 $(PLATFORMS):
 	mkdir -p release
-	GOOS=$(os) GOARCH=amd64 go build -o release/$(BINARY) -ldflags="$(LDFLAGS)"
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=amd64 go build -o release/$(BINARY) -ldflags="$(LDFLAGS)"
 	tar -czvf release/$(BINARY)-$(VERSION)-$(os)-amd64.tar.gz README.md -C release/ $(BINARY)
-	GOOS=$(os) GOARCH=arm64 go build -o release/$(BINARY) -ldflags="$(LDFLAGS)"
+	CGO_ENABLED=0 GOOS=$(os) GOARCH=arm64 go build -o release/$(BINARY) -ldflags="$(LDFLAGS)"
 	tar -czvf release/$(BINARY)-$(VERSION)-$(os)-arm64.tar.gz README.md -C release/ $(BINARY)
 
 .PHONY: release
