@@ -172,12 +172,12 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) error {
 	projects := []Project{}
 	if prjs, ok := settingsMap["projects"]; ok {
 		for _, prj := range prjs.([]interface{}) {
-			p := prj.(map[interface{}]interface{})
+			p := prj.(map[string]interface{})
 			projectStruct := Project{
 				Tokens: []TokenDetail{},
 			}
 			for key, value := range p {
-				switch key.(string) {
+				switch key {
 				case "name":
 					projectStruct.Name = value.(string)
 				case "error_hook":
@@ -199,7 +199,9 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) error {
 				case "hooks":
 					projectStruct.Hooks = []Hook{}
 					for _, v := range value.([]interface{}) {
-						projectStruct.Hooks = append(projectStruct.Hooks, decodeHook(v.(map[interface{}]interface{})))
+						if val, ok := v.(map[string]interface{}); ok {
+							projectStruct.Hooks = append(projectStruct.Hooks, decodeHook(val))
+						}
 					}
 				}
 			}
@@ -207,10 +209,10 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) error {
 			if tokens, hasTokens := p["tokens"]; hasTokens {
 				// tokens := p["tokens"].([]interface{})
 				for _, token := range tokens.([]interface{}) {
-					token := token.(map[interface{}]interface{})
+					token := token.(map[string]interface{})
 					tokenStruct := TokenDetail{}
 					for tokenK, tokenV := range token {
-						switch tokenK.(string) {
+						switch tokenK {
 						case "whitelistnet":
 							tokenStruct.WhitelistedNetwork = tokenV.(string)
 						case "token":
@@ -227,7 +229,7 @@ func DecodeProjectConfiguration(settingsMap map[string]interface{}) error {
 	return nil
 }
 
-func decodeHook(h map[interface{}]interface{}) Hook {
+func decodeHook(h map[string]interface{}) Hook {
 	hook := Hook{}
 	for k, v := range h {
 		switch k {
